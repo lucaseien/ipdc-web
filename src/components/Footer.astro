@@ -1,0 +1,93 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import Newsletter from './Newsletter.astro';
+import { site } from '@/config/site';
+import { mainNav } from '@/i18n/nav';
+import { t, type Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const nav = mainNav[lang];
+const institute = nav.find((i) => i.children && i.href.includes('instituto'))?.children ?? [];
+const resources = nav.flatMap((i) => (i.href.includes('instituto') ? [] : i.children ?? [i]));
+const socials = [
+  { name: 'Facebook', href: site.social.facebook, icon: 'facebook' },
+  { name: 'X (Twitter)', href: site.social.x, icon: 'x' },
+  { name: 'YouTube', href: site.social.youtube, icon: 'youtube' },
+] as const;
+const buildYear = new Date().getFullYear();
+---
+
+<footer class="on-dark bg-azul-950 text-azul-100">
+  <div class="flex h-1" aria-hidden="true"><span class="flex-1 bg-rojo-600"></span><span class="flex-1 bg-azul-700"></span></div>
+  <div class="container-page grid gap-12 py-14 lg:grid-cols-12 lg:gap-8">
+    <div class="lg:col-span-4">
+      <Logo tone="dark" />
+      <p class="mt-5 max-w-sm text-small text-azul-200">{t(lang, 'site.tagline')}.</p>
+    </div>
+
+    <nav aria-labelledby="footer-institute" class="lg:col-span-2">
+      <h2 id="footer-institute" class="label mb-4 text-azul-200">{t(lang, 'footer.institute')}</h2>
+      <ul class="space-y-2.5 text-small">
+        {institute.map((l) => <li><a href={l.href} class="text-white no-underline hover:underline">{l.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav aria-labelledby="footer-resources" class="lg:col-span-2">
+      <h2 id="footer-resources" class="label mb-4 text-azul-200">{t(lang, 'footer.resources')}</h2>
+      <ul class="space-y-2.5 text-small">
+        {resources.map((l) => <li><a href={l.href} class="text-white no-underline hover:underline">{l.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="lg:col-span-4">
+      <h2 class="label mb-4 text-azul-200">{t(lang, 'footer.contact')}</h2>
+      <address class="space-y-2.5 text-small not-italic">
+        <p class="flex items-center gap-2.5">
+          <Icon name="mail" class="size-5 text-azul-200" />
+          <a href={`mailto:${site.email}`} class="text-white">{site.email}</a>
+        </p>
+        <p class="flex items-center gap-2.5">
+          <Icon name="pin" class="size-5 text-azul-200" />
+          <span>{site.location.city}, {site.location.country}</span>
+        </p>
+      </address>
+      <h2 class="sr-only">{t(lang, 'footer.follow')}</h2>
+      <ul class="mt-5 flex gap-2">
+        {
+          socials.map((s) => (
+            <li>
+              <a
+                href={s.href}
+                class="flex size-11 items-center justify-center rounded-full border border-azul-600 text-white hover:border-white hover:bg-azul-800"
+                rel="me noopener"
+              >
+                <Icon name={s.icon} class="size-5" label={s.name} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="border-t border-azul-800 pt-10 lg:col-span-12">
+      <div class="max-w-2xl">
+        <Newsletter lang={lang} tone="dark" id="footer-newsletter" />
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-azul-800">
+    <p class="container-page py-6 text-label text-azul-200">
+      © <span data-year>{buildYear}</span> {t(lang, 'footer.rights')}
+    </p>
+  </div>
+</footer>
+
+<script>
+  // Año del copyright siempre actual, aunque el sitio no se vuelva a publicar.
+  document.querySelectorAll('[data-year]').forEach((el) => (el.textContent = String(new Date().getFullYear())));
+</script>

@@ -1,0 +1,75 @@
+---
+import { getCollection, getEntries, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import PersonCard from '@/components/PersonCard.astro';
+import { getPage, personPhoto } from '@/lib/content';
+import foto from '@/assets/fotos/costanera.jpg';
+
+const page = await getPage('autoridades');
+const { Content } = await render(page);
+
+const comisiones = (await getCollection('comisiones')).sort((a, b) => b.data.period.localeCompare(a.data.period));
+const withPeople = await Promise.all(
+  comisiones.map(async (c) => {
+    const people = await getEntries(c.data.members.map((m) => m.persona));
+    return { ...c.data, members: c.data.members.map((m, i) => ({ role: m.role, persona: people[i] })) };
+  }),
+);
+const current = withPeople.find((c) => c.current) ?? withPeople[0];
+const previous = withPeople.filter((c) => c !== current);
+---
+
+<BaseLayout title={page.data.title} description={page.data.description}>
+  <PageHeader
+    eyebrow="El Instituto"
+    title={page.data.title}
+    image={foto}
+    imageAlt="Vista aérea de Asunción: la Costanera y el centro histórico junto a la bahía"
+    breadcrumbs={[{ label: 'Inicio', href: '/es/' }, { label: 'El Instituto', href: '/es/instituto/' }, { label: page.data.title }]}
+  />
+
+  <div class="container-page py-16 sm:py-20">
+    <div class="prose-ipdc mb-14"><Content /></div>
+
+    <section aria-labelledby="comision-actual">
+      <SectionHeading id="comision-actual" title={`Comisión Directiva (${current.period})`} />
+      <ul class="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-5">
+        {
+          current.members.map((m) => (
+            <li>
+              <PersonCard name={m.persona.data.name} role={m.role} photo={personPhoto(m.persona.data.photo)} memoriam={m.persona.data.memoriam} />
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    {
+      previous.length > 0 && (
+        <section aria-labelledby="comisiones-anteriores" class="mt-24">
+          <SectionHeading id="comisiones-anteriores" title="Comisiones anteriores" />
+          <div class="grid gap-12 lg:grid-cols-2">
+            {previous.map((c) => (
+              <div>
+                <h3 class="font-serif text-h3 font-semibold">Comisión Directiva ({c.period})</h3>
+                <dl class="mt-4 divide-y divide-linea border-y border-linea">
+                  {c.members.map((m) => (
+                    <div class="flex flex-wrap justify-between gap-x-6 gap-y-1 py-3">
+                      <dt class="font-semibold text-tinta">
+                        {m.persona.data.name}
+                        {m.persona.data.memoriam && <span class="font-normal text-tinta-3"> (+)</span>}
+                      </dt>
+                      <dd class="text-small text-tinta-2">{m.role}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+</BaseLayout>

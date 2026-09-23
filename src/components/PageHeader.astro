@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Breadcrumbs, { type Crumb } from './Breadcrumbs.astro';
+
+interface Props {
+  title: string;
+  eyebrow?: string;
+  lead?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  breadcrumbs?: Crumb[];
+}
+
+const { title, eyebrow, lead, image, imageAlt = '', breadcrumbs } = Astro.props;
+---
+
+{
+  image ? (
+    <header class="on-dark relative isolate overflow-hidden bg-azul-950 text-white">
+      <Image
+        src={image}
+        alt={imageAlt}
+        widths={[640, 960, 1440, 1920]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="absolute inset-0 -z-10 size-full object-cover object-right"
+      />
+      <div class="absolute inset-0 -z-10 bg-gradient-to-t from-azul-950 via-azul-950/75 to-azul-950/20 lg:bg-gradient-to-r lg:from-azul-950 lg:via-azul-950/70 lg:to-transparent" />
+      <div class="container-page pt-10 pb-12 sm:pt-16 sm:pb-16 lg:pt-24 lg:pb-24">
+        {breadcrumbs && <Breadcrumbs items={breadcrumbs} tone="dark" />}
+        <div class="mt-16 max-w-3xl sm:mt-24 lg:mt-10">
+          {eyebrow && <p class="label mb-4 text-rojo-100">{eyebrow}</p>}
+          <h1 class="text-h1 font-medium text-white">{title}</h1>
+          <span class="filete mt-6" aria-hidden="true" />
+          {lead && <p class="mt-6 max-w-2xl text-lead text-azul-100">{lead}</p>}
+        </div>
+      </div>
+    </header>
+  ) : (
+    <header class="border-b border-linea bg-papel-2">
+      <div class="container-page pt-8 pb-10 sm:pt-12 sm:pb-14">
+        {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
+        <div class="mt-8 max-w-3xl">
+          {eyebrow && <p class="label mb-3">{eyebrow}</p>}
+          <h1 class="text-h1 font-medium">{title}</h1>
+          <span class="filete mt-5" aria-hidden="true" />
+          {lead && <p class="mt-5 max-w-2xl text-lead text-tinta-2">{lead}</p>}
+          <slot />
+        </div>
+      </div>
+    </header>
+  )
+}

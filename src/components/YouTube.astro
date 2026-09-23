@@ -1,0 +1,53 @@
+---
+/**
+ * Video de YouTube con "fachada": muestra una imagen y solo carga el reproductor
+ * (y las cookies de YouTube) cuando la persona hace clic. Mejora mucho el rendimiento.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  id: string;
+  title: string;
+  poster?: ImageMetadata;
+}
+const { id, title, poster } = Astro.props;
+---
+
+<figure class="m-0">
+  <div class="yt relative aspect-video overflow-hidden rounded-card bg-azul-950" data-yt={id} data-title={title}>
+    {
+      poster ? (
+        <Image src={poster} alt="" widths={[480, 800, 1200]} sizes="(min-width: 1024px) 600px, 100vw" class="size-full object-cover opacity-80" />
+      ) : (
+        <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" width="480" height="360" class="size-full object-cover opacity-80" />
+      )
+    }
+    <button
+      type="button"
+      class="absolute inset-0 flex items-center justify-center text-white"
+      aria-label={`Reproducir video: ${title}`}
+    >
+      <span class="flex size-16 items-center justify-center rounded-full bg-rojo-600 shadow-card-hover transition-transform hover:scale-105">
+        <Icon name="play" class="size-7 translate-x-0.5" />
+      </span>
+    </button>
+  </div>
+  <figcaption class="mt-3 font-serif text-[1.125rem] leading-snug font-semibold text-azul-900">{title}</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-yt]').forEach((box) => {
+    box.querySelector('button')?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${box.dataset.yt}?autoplay=1&rel=0`;
+      iframe.title = box.dataset.title ?? 'Video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.className = 'absolute inset-0 size-full';
+      box.replaceChildren(iframe);
+      iframe.focus();
+    });
+  });
+</script>

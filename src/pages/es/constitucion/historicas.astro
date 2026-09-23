@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import DocumentCard from '@/components/DocumentCard.astro';
+import Button from '@/components/Button.astro';
+import { getPage } from '@/lib/content';
+import foto from '@/assets/fotos/catedral.jpg';
+
+const page = await getPage('constituciones-historicas');
+const docs = (await getCollection('documentos', (d) => d.data.group === 'historicas')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title={page.data.title} description={page.data.description}>
+  <PageHeader
+    eyebrow="Constitución"
+    title={page.data.title}
+    image={foto}
+    imageAlt="Catedral Metropolitana de Asunción reflejada en un charco tras la lluvia"
+    breadcrumbs={[{ label: 'Inicio', href: '/es/' }, { label: 'Constitución', href: '/es/constitucion/' }, { label: 'Constituciones históricas' }]}
+  />
+
+  <div class="container-page py-16 sm:py-20">
+    <ol class="relative max-w-3xl space-y-5 border-l-2 border-linea pl-6 sm:pl-10" aria-label="Documentos, del más reciente al más antiguo">
+      {
+        docs.map((d) => (
+          <li class="relative">
+            <span class="absolute top-7 -left-[calc(1.5rem+7px)] size-3 rounded-full border-2 border-papel bg-rojo-600 sm:-left-[calc(2.5rem+7px)]" aria-hidden="true" />
+            <DocumentCard
+              title={d.data.title}
+              href={d.data.file ?? d.data.url}
+              docLang={d.data.lang}
+              year={d.data.year}
+              available={!!(d.data.file || d.data.url)}
+              headingLevel="h2"
+            />
+          </li>
+        ))
+      }
+    </ol>
+    <p class="mt-12"><Button href="/es/constitucion/" variant="link" arrow>Constitución de 1992</Button></p>
+  </div>
+</BaseLayout>

@@ -1,0 +1,72 @@
+---
+import { site } from '@/config/site';
+import { t, type Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  tone?: 'light' | 'dark';
+  id?: string;
+}
+
+const { lang, tone = 'light', id = 'newsletter' } = Astro.props;
+const action = site.mailchimpAction;
+const enabled = action.length > 0;
+// Campo "honeypot" anti-spam que exige el formulario embebido de Mailchimp: b_<u>_<id>
+const honeypot = enabled ? (() => {
+  const u = new URL(action.replaceAll('&amp;', '&'));
+  return `b_${u.searchParams.get('u')}_${u.searchParams.get('id')}`;
+})() : '';
+const dark = tone === 'dark';
+---
+
+<div class:list={[dark && 'on-dark']}>
+  <h2 id={`${id}-title`} class:list={['font-serif text-h3 font-semibold text-balance', dark ? 'text-white' : 'text-azul-900']}>
+    {t(lang, 'newsletter.title')}
+  </h2>
+  <form
+    action={enabled ? action : undefined}
+    method="post"
+    target="_blank"
+    class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end"
+    aria-describedby={enabled ? undefined : `${id}-soon`}
+  >
+    <div class="flex-1">
+      <label for={`${id}-email`} class:list={['mb-1.5 block text-small font-semibold', dark ? 'text-azul-200' : 'text-tinta-2']}>
+        {t(lang, 'newsletter.email')}
+      </label>
+      <input
+        id={`${id}-email`}
+        type="email"
+        name="EMAIL"
+        required
+        autocomplete="email"
+        inputmode="email"
+        disabled={!enabled}
+        class:list={[
+          'min-h-12 w-full rounded-card border px-3.5 text-body disabled:cursor-not-allowed disabled:opacity-60',
+          dark ? 'border-azul-600 bg-azul-900 text-white placeholder:text-azul-200' : 'border-tinta-3 bg-white text-tinta',
+        ]}
+      />
+    </div>
+    {enabled && (
+      <div aria-hidden="true" class="absolute -left-[5000px]">
+        <input type="text" name={honeypot} tabindex="-1" value="" />
+      </div>
+    )}
+    <button
+      type="submit"
+      disabled={!enabled}
+      class:list={[
+        'min-h-12 rounded-card px-5 font-semibold disabled:cursor-not-allowed disabled:opacity-60',
+        dark ? 'bg-white text-azul-900 hover:bg-azul-100' : 'bg-azul-700 text-white hover:bg-azul-800',
+      ]}
+    >
+      {t(lang, 'newsletter.submit')}
+    </button>
+  </form>
+  {!enabled && (
+    <p id={`${id}-soon`} class:list={['mt-2 text-small', dark ? 'text-azul-200' : 'text-tinta-3']}>
+      {t(lang, 'newsletter.soon')}
+    </p>
+  )}
+</div>

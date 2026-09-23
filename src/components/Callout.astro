@@ -1,0 +1,19 @@
+---
+interface Props {
+  tone?: 'note' | 'accent';
+  title?: string;
+  class?: string;
+}
+const { tone = 'note', title, class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    'rounded-card border-l-4 p-5 text-small sm:p-6',
+    tone === 'note' ? 'border-azul-700 bg-azul-50 text-tinta' : 'border-rojo-600 bg-rojo-100/60 text-tinta',
+    className,
+  ]}
+>
+  {title && <p class="mb-2 font-semibold text-azul-900">{title}</p>}
+  <div class="[&>p+p]:mt-3"><slot /></div>
+</div>

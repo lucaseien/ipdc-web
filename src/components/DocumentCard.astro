@@ -1,0 +1,98 @@
+---
+import Icon from './Icon.astro';
+import { localFileInfo } from '@/lib/files';
+import { formatBytes } from '@/lib/format';
+import { t, type Lang } from '@/i18n/ui';
+
+interface Props {
+  title: string;
+  /** Archivo local en /public (se calcula peso y páginas) o URL externa */
+  href?: string;
+  docLang?: 'es' | 'gn' | 'en';
+  year?: number | string;
+  description?: string;
+  /** false: se muestra la tarjeta sin enlace (documento pendiente) */
+  available?: boolean;
+  lang?: Lang;
+  headingLevel?: 'h2' | 'h3' | 'h4';
+}
+
+const { title, href, docLang = 'es', year, description, available = true, lang = 'es', headingLevel: H = 'h3' } = Astro.props;
+const external = !!href && /^https?:\/\//.test(href);
+const isPdf = !!href && /\.pdf($|\?)/i.test(href);
+const info = href && !external && available ? localFileInfo(href) : undefined;
+const host = external ? new URL(href!).hostname.replace(/^www\./, '') : undefined;
+const meta = [
+  t(lang, `doc.lang.${docLang}`),
+  isPdf ? 'PDF' : undefined,
+  info && formatBytes(info.bytes, lang),
+  info?.pages && `${info.pages} ${t(lang, 'doc.pages')}`,
+  host,
+].filter(Boolean);
+const linked = available && href;
+---
+
+<article
+  class:list={[
+    'group relative flex gap-4 rounded-card border bg-white p-4 sm:p-5',
+    linked ? 'border-linea shadow-card transition-shadow hover:shadow-card-hover focus-within:shadow-card-hover' : 'border-dashed border-linea bg-transparent',
+  ]}
+>
+  <!-- Ícono de documento con marca PDF -->
+  <div class="relative mt-0.5 h-14 w-11 shrink-0" aria-hidden="true">
+    <svg viewBox="0 0 44 56" class:list={['size-full', linked ? 'text-azul-700' : 'text-tinta-3']}>
+      <path d="M4 1.5h24L42.5 16v36.5a2 2 0 0 1-2 2h-37a2 2 0 0 1-2-2v-49a2 2 0 0 1 2-2Z" fill="#fff" stroke="currentColor" stroke-width="2" />
+      <path d="M28 1.5V14a2 2 0 0 0 2 2h12.5" fill="none" stroke="currentColor" stroke-width="2" />
+      <path d="M9 27h20M9 33h26M9 39h22" stroke="currentColor" stroke-width="2" opacity=".35" />
+    </svg>
+    {isPdf && (
+      <span class:list={['absolute -left-1.5 bottom-2 rounded-sm px-1 text-[0.625rem] leading-4 font-bold text-white', linked ? 'bg-rojo-600' : 'bg-tinta-3']}>
+        PDF
+      </span>
+    )}
+    {external && !isPdf && (
+      <span class="absolute -left-1.5 bottom-2 rounded-sm bg-azul-700 p-0.5 text-white">
+        <Icon name="external" class="size-3" />
+      </span>
+    )}
+  </div>
+
+  <div class="min-w-0 flex-1">
+    {year && <p class="label mb-1 text-tinta-3">{year}</p>}
+    <H class="font-serif text-[1.1875rem] leading-snug font-semibold text-azul-900">
+      {
+        linked ? (
+          <a href={href} class="no-underline after:absolute after:inset-0 group-hover:underline" {...(external ? { rel: 'noopener', target: '_blank' } : {})}>
+            {title}
+            {external && <span class="sr-only"> {t(lang, 'a11y.newTab')}</span>}
+          </a>
+        ) : (
+          title
+        )
+      }
+    </H>
+    {description && <p class="mt-1 text-small text-tinta-2">{description}</p>}
+    {
+      linked ? (
+        <p class="mt-2 flex flex-wrap items-center gap-x-2 text-small text-tinta-3">
+          {meta.map((m, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true">·</span>}
+              <span>{m}</span>
+            </>
+          ))}
+        </p>
+      ) : (
+        <p class="mt-2 text-small text-tinta-3 italic">{t(lang, 'doc.unavailable')}</p>
+      )
+    }
+  </div>
+
+  {
+    linked && (
+      <span class="hidden self-center text-azul-700 sm:block" aria-hidden="true">
+        <Icon name={external ? 'external' : 'download'} class="size-5" />
+      </span>
+    )
+  }
+</article>

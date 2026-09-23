@@ -1,0 +1,21 @@
+---
+/** Datos estructurados schema.org de la organización (para buscadores). */
+import { site } from '@/config/site';
+
+const data = {
+  '@context': 'https://schema.org',
+  '@type': ['Organization', 'EducationalOrganization'],
+  '@id': `${site.url}/#organization`,
+  name: site.name,
+  alternateName: site.shortName,
+  url: `${site.url}/es/`,
+  logo: `${site.url}/logo-ipdc.png`,
+  email: site.email,
+  foundingDate: site.foundingDate,
+  address: { '@type': 'PostalAddress', addressLocality: site.location.city, addressCountry: site.location.countryCode },
+  sameAs: Object.values(site.social),
+  memberOf: { '@type': 'Organization', name: 'Instituto Iberoamericano de Derecho Constitucional', url: 'https://iidc.juridicas.unam.mx/' },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(data)} />

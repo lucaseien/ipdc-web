@@ -1,0 +1,91 @@
+---
+/** Listado paginado del blog (general o por categoría). */
+import { render } from 'astro:content';
+import PageHeader from './PageHeader.astro';
+import PostCard from './PostCard.astro';
+import Pagination from './Pagination.astro';
+import Callout from './Callout.astro';
+import { categories, getPage, postUrl, type Category, type Post } from '@/lib/content';
+
+interface Props {
+  posts: Post[];
+  current: number;
+  total: number;
+  category?: Category;
+}
+const { posts, current, total, category } = Astro.props;
+const intro = await getPage('blog');
+const descargo = await getPage('blog-descargo');
+const colaborar = await getPage('blog-colaborar');
+const { Content: Intro } = await render(intro);
+const { Content: Descargo } = await render(descargo);
+const { Content: Colaborar } = await render(colaborar);
+const base = category ? `/es/blog/categoria/${category}/` : '/es/blog/';
+const url = (n: number) => (n === 1 ? base : `${base}pagina/${n}/`);
+const tabs = [{ label: 'Todas', href: '/es/blog/', active: !category }].concat(
+  (Object.keys(categories) as Category[]).map((c) => ({ label: categories[c], href: `/es/blog/categoria/${c}/`, active: c === category })),
+);
+---
+
+<PageHeader
+  eyebrow={category ? 'Blog' : undefined}
+  title={category ? categories[category] : intro.data.title}
+  breadcrumbs={[
+    { label: 'Inicio', href: '/es/' },
+    ...(category ? [{ label: 'Blog', href: '/es/blog/' }, { label: categories[category] }] : [{ label: 'Blog' }]),
+  ]}
+>
+  {
+    !category && current === 1 && (
+      <div class="mt-6 max-w-2xl text-tinta-2">
+        <h2 class="sr-only">{intro.data.lead}</h2>
+        <div class="text-lead [&_p]:text-pretty"><Intro /></div>
+      </div>
+    )
+  }
+</PageHeader>
+
+<div class="container-page py-12 sm:py-16">
+  <nav aria-label="Categorías del blog" class="mb-12 overflow-x-auto">
+    <ul class="flex gap-2">
+      {
+        tabs.map((t) => (
+          <li>
+            <a
+              href={t.href}
+              aria-current={t.active ? 'page' : undefined}
+              class="inline-flex min-h-11 items-center rounded-full border border-linea bg-white px-4 text-small font-semibold whitespace-nowrap text-tinta no-underline hover:border-azul-700 aria-[current=page]:border-azul-700 aria-[current=page]:bg-azul-700 aria-[current=page]:text-white"
+            >
+              {t.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <ul class="grid gap-x-10 gap-y-14 md:grid-cols-2 lg:grid-cols-3">
+    {
+      posts.map((p) => (
+        <li>
+          <PostCard
+            title={p.data.title}
+            href={postUrl(p)}
+            date={p.data.date}
+            authors={p.data.authors}
+            category={category ? undefined : categories[p.data.category]}
+            excerpt={p.data.description}
+            headingLevel="h2"
+          />
+        </li>
+      ))
+    }
+  </ul>
+
+  <Pagination current={current} total={total} url={url} />
+
+  <div class="mt-16 grid gap-6 lg:grid-cols-2">
+    <Callout><Descargo /></Callout>
+    <Callout tone="accent"><Colaborar /></Callout>
+  </div>
+</div>

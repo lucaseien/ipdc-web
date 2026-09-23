@@ -1,0 +1,42 @@
+# Comisiones Directivas del IPDC, de la más reciente a la más antigua.
+# - persona: id de src/content/personas.yaml
+# - current: true solo en la comisión vigente
+- id: "2025-2028"
+  period: "2025-2028"
+  current: true
+  members:
+    - { persona: robert-marcial-gonzalez, role: Presidente }
+    - { persona: elodia-almiron, role: Vice-Presidenta }
+    - { persona: manuel-riera-dominguez, role: Secretario General }
+    - { persona: laura-whittingslow, role: Tesorera }
+    - { persona: jose-luis-torales, role: Vocal Titular }
+    - { persona: adriana-marecos, role: Vocal Titular }
+    - { persona: juan-carlos-mendonca-bonnet, role: Vocal Suplente }
+    - { persona: giovanna-parini, role: Vocal Suplente }
+    - { persona: jorge-melgarejo, role: Síndico }
+
+- id: "2022-2025"
+  period: "2022-2025"
+  members:
+    - { persona: robert-marcial-gonzalez, role: Presidente }
+    - { persona: elodia-almiron, role: Vice-Presidenta }
+    - { persona: laura-whittingslow, role: Tesorera }
+    - { persona: lourdes-peroni, role: Vocal Titular }
+    - { persona: jose-luis-torales, role: Vocal Titular }
+    - { persona: giovanna-parini, role: Vocal Titular }
+    - { persona: juan-carlos-mendonca-bonnet, role: Vocal Suplente }
+    - { persona: emilio-camacho, role: Vocal Suplente }
+    - { persona: alberto-poletti, role: Síndico }
+
+- id: "2019-2022"
+  period: "2019-2022"
+  members:
+    - { persona: diego-moreno-rodriguez-alcala, role: Presidente }
+    - { persona: fatima-andrada-pasmor, role: Vice-Presidenta }
+    - { persona: giovanna-parini, role: Tesorera }
+    - { persona: enrique-marin-fontclara, role: Vocal Titular }
+    - { persona: adriana-marecos, role: Vocal Titular }
+    - { persona: raul-sapena-brugada, role: Vocal Titular }
+    - { persona: juan-carlos-mendonca-bonnet, role: Vocal Titular }
+    - { persona: maria-ines-ramirez, role: Vocal Suplente }
+    - { persona: robert-marcial-gonzalez, role: Síndico }

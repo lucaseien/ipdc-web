@@ -1,0 +1,118 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import YouTube from '@/components/YouTube.astro';
+import Icon from '@/components/Icon.astro';
+import Button from '@/components/Button.astro';
+import { formatDate } from '@/lib/format';
+import { getEvents, slugOf, type Evento } from '@/lib/content';
+
+export async function getStaticPaths() {
+  const { upcoming, past } = await getEvents('es');
+  return [...upcoming, ...past].map((event) => ({ params: { slug: slugOf(event) }, props: { event } }));
+}
+
+const { event } = Astro.props as { event: Evento };
+const d = event.data;
+const { Content } = await render(event);
+const sameMonth = d.endDate && d.endDate.getUTCMonth() === d.startDate.getUTCMonth() && d.endDate.getUTCFullYear() === d.startDate.getUTCFullYear();
+const when = !d.endDate
+  ? formatDate(d.startDate)
+  : sameMonth
+    ? `${d.startDate.getUTCDate()} y ${formatDate(d.endDate)}`
+    : `${formatDate(d.startDate)} – ${formatDate(d.endDate)}`;
+const groups = [...new Set(d.partners.map((p) => p.group))];
+const isPast = (d.endDate ?? d.startDate).valueOf() < Date.now();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: d.title,
+  description: d.description,
+  startDate: d.startDate.toISOString().slice(0, 10),
+  endDate: (d.endDate ?? d.startDate).toISOString().slice(0, 10),
+  eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  location: { '@type': 'Place', name: d.location, address: d.address ?? d.location },
+  organizer: { '@id': 'https://ipdc.org.py/#organization' },
+};
+---
+
+<BaseLayout title={d.title} description={d.description} image={d.cover?.src}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+  <PageHeader
+    eyebrow={isPast ? 'Evento realizado' : 'Próximo evento'}
+    title={d.title}
+    breadcrumbs={[{ label: 'Inicio', href: '/es/' }, { label: 'Eventos', href: '/es/eventos/' }, { label: d.title }]}
+  />
+
+  <div class="container-page grid gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:gap-16">
+    <div class="lg:col-span-7">
+      <div class="prose-ipdc [&_h2:first-child]:mt-0"><Content /></div>
+    </div>
+    <aside class="lg:col-span-5">
+      <dl class="space-y-5 rounded-card border border-linea bg-white p-6 shadow-card">
+        <div>
+          <dt class="label flex items-center gap-3 text-tinta-3"><Icon name="calendar" class="size-5 text-rojo-600" />Fecha</dt>
+          <dd class="mt-1 pl-8 font-semibold">{when}</dd>
+        </div>
+        {d.location && (
+          <div>
+            <dt class="label flex items-center gap-3 text-tinta-3"><Icon name="pin" class="size-5 text-rojo-600" />Lugar</dt>
+            <dd class="mt-1 pl-8 font-semibold">{d.location}</dd>
+            {d.address && <dd class="pl-8 text-small text-tinta-2">{d.address}</dd>}
+          </div>
+        )}
+        {d.modality && (
+          <div>
+            <dt class="label flex items-center gap-3 text-tinta-3"><Icon name="screen" class="size-5 text-rojo-600" />Modalidad</dt>
+            <dd class="mt-1 pl-8 font-semibold">{d.modality}</dd>
+          </div>
+        )}
+      </dl>
+      {d.registrationUrl && !isPast && <p class="mt-6"><Button href={d.registrationUrl} arrow>Inscribirme</Button></p>}
+      {d.cover && (
+        <Image src={d.cover} alt={d.coverAlt ?? ''} widths={[480, 800, 960]} sizes="(min-width: 1024px) 460px, 100vw" class="mt-8 w-full rounded-card shadow-card" />
+      )}
+    </aside>
+  </div>
+
+  {
+    d.videos.length > 0 && (
+      <section class="border-y border-linea bg-white py-16 sm:py-20" aria-labelledby="videos">
+        <div class="container-page">
+          <SectionHeading id="videos" title="Videos" />
+          <ul class="grid gap-10 md:grid-cols-2">
+            {d.videos.map((v) => (
+              <li><YouTube id={v.youtubeId} title={v.title} poster={v.poster} /></li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    groups.length > 0 && (
+      <section class="container-page py-16 sm:py-20" aria-labelledby="aliados">
+        <SectionHeading id="aliados" eyebrow="Nuestros aliados" title="Organizan y apoyan" />
+        <div class="space-y-12">
+          {groups.map((g) => (
+            <div>
+              <h3 class="label mb-5 text-tinta-3">{g}</h3>
+              <ul class="flex flex-wrap items-center gap-x-10 gap-y-6">
+                {d.partners.filter((p) => p.group === g).map((p) => {
+                  const logo = <Image src={p.logo} alt={p.name} height={64} densities={[1, 2]} class="h-14 w-auto object-contain sm:h-16" />;
+                  return <li>{p.url ? <a href={p.url} rel="noopener" class="block">{logo}</a> : logo}</li>;
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

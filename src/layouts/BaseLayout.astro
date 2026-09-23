@@ -1,0 +1,78 @@
+---
+import '@/styles/global.css';
+// Fuentes principales (subconjunto latino): se precargan para evitar saltos de texto al cargar.
+import serifFont from '@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2?url';
+import sansFont from '@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-normal.woff2?url';
+import sansItalicFont from '@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-italic.woff2?url';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { site } from '@/config/site';
+import { t, type Lang } from '@/i18n/ui';
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: Lang;
+  /** Imagen para Open Graph (ruta absoluta o URL). */
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  alternates?: Partial<Record<Lang, string>>;
+  /** Precargar también la cursiva (textos largos que la usan, como las entradas del blog). */
+  preloadItalic?: boolean;
+}
+
+const { title, description, lang = 'es', image = '/og-default.jpg', type = 'website', noindex = false, alternates = {}, preloadItalic = false } =
+  Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const fullTitle = title === site.name ? title : `${title} — ${site.shortName}`;
+const ogImage = new URL(image, Astro.site);
+const locale = lang === 'es' ? 'es_PY' : 'en_US';
+---
+
+<!doctype html>
+<html lang={lang === 'es' ? 'es-PY' : 'en'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" href={serifFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={sansFont} as="font" type="font/woff2" crossorigin />
+    {preloadItalic && <link rel="preload" href={sansItalicFont} as="font" type="font/woff2" crossorigin />}
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {
+      Object.entries(alternates).map(([l, href]) => (
+        <link rel="alternate" hreflang={l} href={new URL(href!, Astro.site)} />
+      ))
+    }
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={locale} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ipdcpy" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#10204f" />
+    <slot name="head" />
+  </head>
+  <body class="flex min-h-dvh flex-col">
+    <a
+      href="#contenido"
+      class="sr-only z-50 rounded-card bg-azul-900 px-4 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      {t(lang, 'a11y.skip')}
+    </a>
+    <Header lang={lang} alternates={alternates} />
+    <main id="contenido" tabindex="-1" class="flex-1 focus:outline-none">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

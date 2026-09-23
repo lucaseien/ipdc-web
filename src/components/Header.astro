@@ -1,0 +1,192 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { mainNav } from '@/i18n/nav';
+import { t, type Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Rutas equivalentes en otros idiomas; el selector solo aparece si hay alguna. */
+  alternates?: Partial<Record<Lang, string>>;
+}
+
+const { lang, alternates = {} } = Astro.props;
+const items = mainNav[lang];
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => path === href;
+const isActive = (href: string, children?: { href: string }[]) =>
+  isCurrent(href) || path.startsWith(href) || !!children?.some((c) => path.startsWith(c.href));
+---
+
+<header class="sticky top-0 z-40 border-b border-linea bg-papel/95 backdrop-blur supports-[backdrop-filter]:bg-papel/85">
+  <div class="flex h-1" aria-hidden="true"><span class="flex-1 bg-rojo-600"></span><span class="flex-1 bg-azul-700"></span></div>
+  <div class="container-page flex h-[4.5rem] items-center justify-between gap-6">
+    <a href={`/${lang}/`} class="no-underline">
+      <Logo />
+      <span class="sr-only">, {t(lang, 'nav.home')}</span>
+    </a>
+
+    <!-- Escritorio -->
+    <nav aria-label={t(lang, 'a11y.mainNav')} class="hidden lg:block">
+      <ul class="flex items-center gap-1" data-desktop-nav>
+        {
+          items.map((item, i) => (
+            <li class="relative">
+              {item.children ? (
+                <>
+                  <button
+                    type="button"
+                    class:list={[
+                      'nav-link inline-flex items-center gap-1',
+                      isActive(item.href, item.children) && 'nav-link--active',
+                    ]}
+                    aria-expanded="false"
+                    aria-controls={`submenu-${i}`}
+                    data-submenu-toggle
+                  >
+                    {item.label}
+                    <Icon name="chevron-down" class="size-4 transition-transform" />
+                  </button>
+                  <ul
+                    id={`submenu-${i}`}
+                    class="absolute top-full left-0 mt-2 hidden min-w-60 rounded-card border border-linea bg-white p-2 shadow-card-hover"
+                  >
+                    {item.children.map((child) => (
+                      <li>
+                        <a
+                          href={child.href}
+                          class="block rounded px-3 py-2 text-small text-tinta no-underline hover:bg-azul-50 hover:text-azul-800 aria-[current=page]:font-semibold aria-[current=page]:text-azul-700"
+                          aria-current={isCurrent(child.href) ? 'page' : undefined}
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <a
+                  href={item.href}
+                  class:list={['nav-link', isActive(item.href) && 'nav-link--active']}
+                  aria-current={isCurrent(item.href) ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <LanguageSwitcher lang={lang} alternates={alternates} />
+      <button
+        type="button"
+        class="inline-flex min-h-11 items-center gap-2 rounded-card border border-linea bg-white px-3 font-semibold text-azul-900 lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-mobile-toggle
+      >
+        <Icon name="menu" class="size-5" />
+        <span data-mobile-label data-open={t(lang, 'nav.menu')} data-close={t(lang, 'nav.close')}>{t(lang, 'nav.menu')}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Móvil -->
+  <nav id="mobile-menu" aria-label={t(lang, 'a11y.mainNav')} class="border-t border-linea bg-papel lg:hidden" hidden>
+    <ul class="container-page max-h-[calc(100dvh-5.75rem)] overflow-y-auto py-4">
+      {
+        items.map((item) => (
+          <li class="border-b border-linea last:border-0">
+            {item.children ? (
+              <>
+                <p class="label pt-4 pb-1 text-tinta-3">{item.label}</p>
+                <ul class="pb-3">
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="flex min-h-12 items-center font-serif text-[1.25rem] text-azul-900 no-underline aria-[current=page]:text-rojo-700"
+                        aria-current={isCurrent(child.href) ? 'page' : undefined}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <a
+                href={item.href}
+                class="flex min-h-14 items-center font-serif text-[1.25rem] text-azul-900 no-underline aria-[current=page]:text-rojo-700"
+                aria-current={isCurrent(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<style>
+  @reference '../styles/global.css';
+  .nav-link {
+    @apply relative rounded px-3 py-2 font-sans text-[0.9844rem] font-semibold text-tinta no-underline hover:text-azul-700;
+  }
+  .nav-link--active::after {
+    content: '';
+    @apply absolute right-3 -bottom-0.5 left-3 h-0.5 bg-rojo-600;
+  }
+  [aria-expanded='true'] > :global(svg) {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  // Submenús de escritorio: botón con aria-expanded, cierre con Escape o clic afuera.
+  const toggles = document.querySelectorAll<HTMLButtonElement>('[data-submenu-toggle]');
+  const setOpen = (btn: HTMLButtonElement, open: boolean) => {
+    btn.setAttribute('aria-expanded', String(open));
+    document.getElementById(btn.getAttribute('aria-controls')!)?.classList.toggle('hidden', !open);
+  };
+  const closeAll = (except?: HTMLButtonElement) => toggles.forEach((b) => b !== except && setOpen(b, false));
+
+  toggles.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      closeAll(btn);
+      setOpen(btn, open);
+    });
+    btn.parentElement?.addEventListener('focusout', (e) => {
+      if (!btn.parentElement!.contains(e.relatedTarget as Node)) setOpen(btn, false);
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const open = [...toggles].find((b) => b.getAttribute('aria-expanded') === 'true');
+    if (open) {
+      setOpen(open, false);
+      open.focus();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    if (!(e.target as Element).closest('[data-desktop-nav]')) closeAll();
+  });
+
+  // Menú móvil
+  const mobileBtn = document.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileLabel = document.querySelector<HTMLElement>('[data-mobile-label]');
+  mobileBtn?.addEventListener('click', () => {
+    const open = mobileBtn.getAttribute('aria-expanded') !== 'true';
+    mobileBtn.setAttribute('aria-expanded', String(open));
+    if (mobileMenu) mobileMenu.hidden = !open;
+    if (mobileLabel) mobileLabel.textContent = open ? mobileLabel.dataset.close! : mobileLabel.dataset.open!;
+  });
+</script>

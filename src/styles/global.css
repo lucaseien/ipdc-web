@@ -1,0 +1,148 @@
+@import '@fontsource-variable/newsreader/opsz.css';
+@import '@fontsource-variable/newsreader/opsz-italic.css';
+@import '@fontsource-variable/source-sans-3/wght.css';
+@import '@fontsource-variable/source-sans-3/wght-italic.css';
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+/*
+ * Sistema de diseño IPDC
+ * Colores tomados del logo: azul #193389 y rojo #C71B2E.
+ * Todas las combinaciones de texto cumplen WCAG 2.1 AA (ver guía de estilo).
+ */
+@theme {
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* Azul institucional (logo) */
+  --color-azul-50: #f3f5fb;
+  --color-azul-100: #e7ecf8;
+  --color-azul-200: #c9d3ee;
+  --color-azul-600: #2845a6;
+  --color-azul-700: #193389;
+  --color-azul-800: #152a70;
+  --color-azul-900: #10204f;
+  --color-azul-950: #0c1636;
+
+  /* Rojo (logo): acento, nunca como color de texto largo */
+  --color-rojo-100: #fbe7e9;
+  --color-rojo-600: #c71b2e;
+  --color-rojo-700: #a8172a;
+
+  /* Neutros cálidos, "papel y tinta" */
+  --color-papel: #faf8f4;
+  --color-papel-2: #f3efe7;
+  --color-linea: #e2ddd3;
+  --color-tinta: #1c1e26;
+  --color-tinta-2: #4a4c55;
+  --color-tinta-3: #62636b;
+
+  --font-serif: 'Newsreader Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-sans: 'Source Sans 3 Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* Escala tipográfica fluida (móvil → escritorio) */
+  --text-display: clamp(2.375rem, 1.6rem + 3.4vw, 4rem);
+  --text-display--line-height: 1.05;
+  --text-h1: clamp(2.125rem, 1.6rem + 2.4vw, 3.25rem);
+  --text-h1--line-height: 1.1;
+  --text-h2: clamp(1.625rem, 1.35rem + 1.2vw, 2.25rem);
+  --text-h2--line-height: 1.2;
+  --text-h3: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --text-h3--line-height: 1.3;
+  --text-lead: clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem);
+  --text-lead--line-height: 1.55;
+  --text-body: clamp(1.0625rem, 1.03rem + 0.15vw, 1.125rem);
+  --text-body--line-height: 1.7;
+  --text-small: 0.9375rem;
+  --text-small--line-height: 1.5;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.3;
+
+  --container-prose: 68ch;
+  --container-page: 76rem;
+
+  --radius-card: 0.375rem;
+  --shadow-card: 0 1px 2px rgb(16 32 79 / 0.06), 0 4px 16px -6px rgb(16 32 79 / 0.12);
+  --shadow-card-hover: 0 2px 4px rgb(16 32 79 / 0.08), 0 12px 28px -10px rgb(16 32 79 / 0.22);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 5.5rem;
+  }
+  body {
+    @apply bg-papel text-tinta font-sans text-body antialiased;
+    font-optical-sizing: auto;
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif text-azul-900;
+    font-optical-sizing: auto;
+    text-wrap: balance;
+    overflow-wrap: break-word; /* palabras muy largas (p. ej. en mayúsculas) no desbordan en celulares */
+  }
+  p { text-wrap: pretty; }
+  a { @apply text-azul-700 underline decoration-1 underline-offset-[0.2em]; }
+  a:hover { @apply text-azul-900 decoration-2; }
+
+  /* Foco visible y consistente en todo el sitio (WCAG 2.4.7) */
+  :focus-visible {
+    outline: 3px solid var(--color-azul-600);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .on-dark :focus-visible { outline-color: var(--color-white); }
+
+  ::selection { background: var(--color-azul-200); color: var(--color-azul-950); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-(--container-page) px-4 sm:px-6 lg:px-8; }
+
+  /* Rótulo pequeño en versalitas, usado como "eyebrow" sobre los títulos */
+  .label { @apply font-sans text-label font-semibold tracking-[0.09em] uppercase text-rojo-700; }
+
+  /* Filete bicolor rojo/azul inspirado en el banner institucional */
+  .filete { @apply block h-1 w-14; background: linear-gradient(90deg, var(--color-rojo-600) 50%, var(--color-azul-700) 50%); }
+
+  /* Texto largo: ancho de lectura, jerarquía clara */
+  .prose-ipdc {
+    @apply prose max-w-(--container-prose) text-body;
+    --tw-prose-body: var(--color-tinta);
+    --tw-prose-headings: var(--color-azul-900);
+    --tw-prose-lead: var(--color-tinta-2);
+    --tw-prose-links: var(--color-azul-700);
+    --tw-prose-bold: var(--color-tinta);
+    --tw-prose-counters: var(--color-rojo-700);
+    --tw-prose-bullets: var(--color-rojo-600);
+    --tw-prose-hr: var(--color-linea);
+    --tw-prose-quotes: var(--color-azul-900);
+    --tw-prose-quote-borders: var(--color-rojo-600);
+    --tw-prose-captions: var(--color-tinta-3);
+    --tw-prose-th-borders: var(--color-linea);
+    --tw-prose-td-borders: var(--color-linea);
+    line-height: 1.7;
+    overflow-wrap: break-word;
+  }
+  /* URLs largas escritas como texto no deben desbordar en celulares */
+  .prose-ipdc :where(a) { overflow-wrap: anywhere; }
+  .prose-ipdc :where(h2, h3, h4) { @apply font-serif font-semibold; }
+  .prose-ipdc :where(h2) { @apply text-h2 mt-[1.8em] mb-[0.6em]; }
+  .prose-ipdc :where(h3) { @apply text-h3; }
+  .prose-ipdc :where(blockquote) { @apply font-serif text-lead not-italic font-normal; }
+  .prose-ipdc blockquote p:first-of-type::before,
+  .prose-ipdc blockquote p:last-of-type::after { content: none; }
+  .prose-ipdc :where(a):hover { @apply decoration-2; }
+  .prose-ipdc :where(img) { @apply rounded-card; }
+}

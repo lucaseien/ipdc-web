@@ -1,0 +1,57 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import Newsletter from '@/components/Newsletter.astro';
+import Icon from '@/components/Icon.astro';
+import { getPage } from '@/lib/content';
+import { site } from '@/config/site';
+
+const page = await getPage('contacto');
+const socials = [
+  { name: 'Facebook', handle: 'InstitutoParaguayoDeDerechoConstitucional', href: site.social.facebook, icon: 'facebook' },
+  { name: 'X (Twitter)', handle: '@ipdcpy', href: site.social.x, icon: 'x' },
+  { name: 'YouTube', handle: 'Canal del IPDC', href: site.social.youtube, icon: 'youtube' },
+] as const;
+---
+
+<BaseLayout title={page.data.title} description={page.data.description}>
+  <PageHeader title={page.data.title} breadcrumbs={[{ label: 'Inicio', href: '/es/' }, { label: page.data.title }]} />
+
+  <div class="container-page grid gap-12 py-16 sm:py-20 lg:grid-cols-2 lg:gap-16">
+    <div class="space-y-10">
+      <section aria-labelledby="escribinos">
+        <h2 id="escribinos" class="label mb-3 text-tinta-3">Email</h2>
+        <a href={`mailto:${site.email}`} class="inline-flex items-center gap-3 font-serif text-h3 break-all">
+          <Icon name="mail" class="size-6 text-rojo-600" />{site.email}
+        </a>
+      </section>
+      <section aria-labelledby="ubicacion">
+        <h2 id="ubicacion" class="label mb-3 text-tinta-3">Ubicación</h2>
+        <p class="inline-flex items-center gap-3 font-serif text-h3 text-azul-900">
+          <Icon name="pin" class="size-6 text-rojo-600" />{site.location.city}, {site.location.country}
+        </p>
+      </section>
+      <section aria-labelledby="redes">
+        <h2 id="redes" class="label mb-4 text-tinta-3">Redes sociales</h2>
+        <ul class="space-y-3">
+          {
+            socials.map((s) => (
+              <li>
+                <a href={s.href} rel="me noopener" class="group flex items-center gap-4 rounded-card border border-linea bg-white p-4 no-underline shadow-card hover:shadow-card-hover">
+                  <span class="flex size-11 items-center justify-center rounded-full bg-azul-700 text-white"><Icon name={s.icon} class="size-5" /></span>
+                  <span>
+                    <span class="block font-semibold text-azul-900 group-hover:underline">{s.name}</span>
+                    <span class="block text-small break-all text-tinta-3">{s.handle}</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+    <div class="self-start rounded-card border border-linea bg-white p-6 sm:p-10">
+      <Newsletter lang="es" id="contacto-newsletter" />
+    </div>
+  </div>
+</BaseLayout>

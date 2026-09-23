@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/Button.astro';
+
+const links = [
+  { label: 'Quiénes somos', href: '/es/instituto/' },
+  { label: 'Constitución de 1992', href: '/es/constitucion/' },
+  { label: 'Publicaciones', href: '/es/publicaciones/' },
+  { label: 'Blog', href: '/es/blog/' },
+];
+---
+
+<BaseLayout title="Página no encontrada" description="La página que buscás no existe o cambió de dirección." noindex>
+  <div class="container-page py-20 sm:py-28">
+    <p class="label">Error 404</p>
+    <h1 class="mt-3 text-h1 font-medium">Página no encontrada</h1>
+    <span class="filete mt-6" aria-hidden="true"></span>
+    <p class="mt-6 max-w-xl text-lead text-tinta-2">La página que buscás no existe o cambió de dirección con el nuevo sitio.</p>
+    <p class="mt-8"><Button href="/es/" arrow>Ir al inicio</Button></p>
+    <h2 class="mt-14 font-sans text-small font-semibold text-tinta-2">También te puede interesar</h2>
+    <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+      {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+    </ul>
+  </div>
+</BaseLayout>

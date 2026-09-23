@@ -1,0 +1,32 @@
+---
+import { languages, t, type Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  alternates: Partial<Record<Lang, string>>;
+}
+
+const { lang, alternates } = Astro.props;
+const others = (Object.keys(languages) as Lang[]).filter((l) => l !== lang && alternates[l]);
+---
+
+{
+  others.length > 0 && (
+    <nav aria-label={t(lang, 'lang.switch')}>
+      <ul class="flex items-center gap-1 font-sans text-small font-semibold">
+        <li>
+          <span class="px-2 text-tinta-3" aria-current="true">
+            {lang.toUpperCase()}
+          </span>
+        </li>
+        {others.map((l) => (
+          <li>
+            <a href={alternates[l]} hreflang={l} lang={l} class="px-2 no-underline" title={languages[l]}>
+              {l.toUpperCase()}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}

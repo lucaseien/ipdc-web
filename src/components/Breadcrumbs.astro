@@ -1,0 +1,30 @@
+---
+export interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  items: Crumb[];
+  tone?: 'light' | 'dark';
+}
+const { items, tone = 'light' } = Astro.props;
+---
+
+<nav aria-label="Ruta de navegación">
+  <ol class:list={['flex flex-wrap items-center gap-x-2 gap-y-1 text-small', tone === 'dark' ? 'text-azul-200' : 'text-tinta-3']}>
+    {
+      items.map((c, i) => (
+        <li class="flex items-center gap-2">
+          {i > 0 && <span aria-hidden="true">/</span>}
+          {c.href ? (
+            <a href={c.href} class:list={['no-underline hover:underline', tone === 'dark' ? 'text-white' : 'text-azul-700']}>
+              {c.label}
+            </a>
+          ) : (
+            <span aria-current="page">{c.label}</span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BlogIndex from '@/components/BlogIndex.astro';
+import { categories, getPosts, POSTS_PER_PAGE, type Category, type Post } from '@/lib/content';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const category of Object.keys(categories) as Category[]) {
+    const posts = await getPosts('es', category);
+    const total = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE));
+    for (let i = 0; i < total; i++) {
+      paths.push({
+        params: { category, page: i === 0 ? undefined : `pagina/${i + 1}` },
+        props: { posts: posts.slice(i * POSTS_PER_PAGE, (i + 1) * POSTS_PER_PAGE), current: i + 1, total, category },
+      });
+    }
+  }
+  return paths;
+}
+
+const { posts, current, total, category } = Astro.props as { posts: Post[]; current: number; total: number; category: Category };
+const title = `${categories[category]} — Blog`;
+---
+
+<BaseLayout
+  title={current > 1 ? `${title} — Página ${current}` : title}
+  description={`Entradas de la categoría ${categories[category]} del Blog del Instituto Paraguayo de Derecho Constitucional.`}
+>
+  <BlogIndex posts={posts} current={current} total={total} category={category} />
+</BaseLayout>
