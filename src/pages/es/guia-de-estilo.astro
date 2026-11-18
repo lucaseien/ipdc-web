@@ -1,13 +1,12 @@
 ---
 /**
  * Guía de estilo interna (noindex, excluida del sitemap).
- * Muestra el sistema de diseño con contenido real del IPDC.
+ * Muestra el sistema de diseño con contenido real del IDSP.
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 import Button from '@/components/Button.astro';
-import DocumentCard from '@/components/DocumentCard.astro';
 import PersonCard from '@/components/PersonCard.astro';
 import PostCard from '@/components/PostCard.astro';
 import EventCard from '@/components/EventCard.astro';
@@ -17,22 +16,21 @@ import Pagination from '@/components/Pagination.astro';
 import Newsletter from '@/components/Newsletter.astro';
 import Logo from '@/components/Logo.astro';
 import panteon from '@/assets/fotos/panteon.jpg';
-import robert from '@/assets/autores/robert-marcial-gonzalez.png';
 
 const colors = [
   { group: 'Azul institucional', items: [
-    ['azul-950', '#0C1636', 'Footer, fondos oscuros'],
-    ['azul-900', '#10204F', 'Títulos'],
-    ['azul-700', '#193389', 'Logo · enlaces · botones'],
-    ['azul-600', '#2845A6', 'Foco de teclado'],
-    ['azul-200', '#C9D3EE', 'Texto sobre azul oscuro'],
-    ['azul-100', '#E7ECF8', 'Fondos suaves'],
-    ['azul-50', '#F3F5FB', 'Notas, hover'],
+    ['azul-950', '#001A38', 'Footer, fondos oscuros'],
+    ['azul-900', '#00254D', 'Títulos'],
+    ['azul-700', '#004890', 'Logo · enlaces · botones'],
+    ['azul-600', '#1A5EAB', 'Foco de teclado'],
+    ['azul-200', '#C5D8EE', 'Texto sobre azul oscuro'],
+    ['azul-100', '#E4EEF8', 'Fondos suaves'],
+    ['azul-50', '#F2F7FC', 'Notas, hover'],
   ] },
-  { group: 'Rojo (acento)', items: [
-    ['rojo-700', '#A8172A', 'Rótulos pequeños'],
-    ['rojo-600', '#C71B2E', 'Logo · filetes · viñetas'],
-    ['rojo-100', '#FBE7E9', 'Fondo de avisos'],
+  { group: 'Celeste (acento)', items: [
+    ['celeste-700', '#0A6D93', 'Rótulos pequeños'],
+    ['celeste-600', '#1A9CC8', 'Logo · filetes · viñetas'],
+    ['celeste-100', '#E2F3FA', 'Fondo de avisos'],
   ] },
   { group: 'Papel y tinta', items: [
     ['tinta', '#1C1E26', 'Texto principal'],
@@ -48,17 +46,17 @@ const contrast = [
   ['Texto principal (tinta) sobre papel', '15,7:1'],
   ['Texto secundario (tinta-2) sobre papel', '8,1:1'],
   ['Metadatos (tinta-3) sobre papel', '5,6:1'],
-  ['Enlace (azul-700) sobre papel', '10,6:1'],
-  ['Rótulo (rojo-700) sobre papel', '7,0:1'],
-  ['Blanco sobre azul-700 (botón)', '11,2:1'],
-  ['azul-200 sobre azul-950 (footer)', '11,9:1'],
+  ['Enlace (azul-700) sobre papel', '8,5:1'],
+  ['Rótulo (celeste-700) sobre papel', '5,5:1'],
+  ['Blanco sobre azul-700 (botón)', '8,9:1'],
+  ['azul-200 sobre azul-950 (footer)', '12,0:1'],
 ];
 ---
 
-<BaseLayout title="Guía de estilo" description="Sistema de diseño del sitio del IPDC." noindex>
+<BaseLayout title="Guía de estilo" description="Sistema de diseño del sitio del IDSP." noindex>
   <PageHeader
     eyebrow="Sistema de diseño"
-    title="Guía de estilo del IPDC"
+    title="Guía de estilo del IDSP"
     lead="Colores, tipografía y componentes del nuevo sitio. Esta página es interna: no se indexa ni aparece en el menú."
     breadcrumbs={[{ label: 'Inicio', href: '/es/' }, { label: 'Guía de estilo' }]}
   />
@@ -72,9 +70,9 @@ const contrast = [
         <div class="flex min-h-40 items-center justify-center rounded-card bg-azul-950 p-8"><Logo tone="dark" /></div>
       </div>
       <p class="mt-4 max-w-(--container-prose) text-small text-tinta-2">
-        Logo redibujado en SVG (8 KB) a partir del PNG de 512 px: el anillo y las seis cabezas son geometría exacta y las letras
-        "IPDC" fueron redibujadas. Colores medidos del original: rojo <code>#C71B2E</code> y azul <code>#193389</code>. El filete
-        bicolor retoma los bloques rojo y azul del banner institucional.
+        Sello circular a partir del JPG de 640 px, con el fondo exterior transparente (pendiente: logo vectorial original).
+        El favicon usa solo el rombo con la balanza, que se lee mejor en tamaños chicos. Colores medidos del original: azul
+        <code>#004890</code> y celeste <code>#1A9CC8</code>. El filete bicolor retoma ambos.
       </p>
     </section>
 
@@ -123,7 +121,7 @@ const contrast = [
       <div class="grid gap-10 lg:grid-cols-2">
         <div>
           <p class="label mb-2 text-tinta-3">Títulos · Newsreader</p>
-          <p class="font-serif text-display font-medium text-azul-900">Democracia constitucional</p>
+          <p class="font-serif text-display font-medium text-azul-900">Derecho de Seguros</p>
           <p class="mt-3 text-small text-tinta-2">
             Serif editorial con ejes variables de peso y tamaño óptico: se afina sola en títulos grandes y gana robustez en
             tamaños chicos. Soporta todos los acentos del español y del guaraní (ã, ẽ, ĩ, õ, ũ, ỹ, g̃).
@@ -143,34 +141,34 @@ const contrast = [
       <dl class="mt-12 divide-y divide-linea border-y border-linea">
         <div class="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
           <dt class="text-label text-tinta-3">Display · 38–64 px</dt>
-          <dd class="font-serif text-display font-medium text-azul-900">Instituto Paraguayo</dd>
+          <dd class="font-serif text-display font-medium text-azul-900">Derecho de Seguros</dd>
         </div>
         <div class="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
           <dt class="text-label text-tinta-3">H1 · 34–52 px</dt>
-          <dd class="font-serif text-h1 font-medium text-azul-900">Constitución de 1992</dd>
+          <dd class="font-serif text-h1 font-medium text-azul-900">Qué ofrecemos</dd>
         </div>
         <div class="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
           <dt class="text-label text-tinta-3">H2 · 26–36 px</dt>
-          <dd class="font-serif text-h2 font-medium text-azul-900">Comisión Directiva (2025-2028)</dd>
+          <dd class="font-serif text-h2 font-medium text-azul-900">Consejo Directivo 2023-2025</dd>
         </div>
         <div class="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
           <dt class="text-label text-tinta-3">H3 · 20–24 px</dt>
-          <dd class="font-serif text-h3 font-semibold text-azul-900">Capítulo paraguayo del IIDC</dd>
+          <dd class="font-serif text-h3 font-semibold text-azul-900">Requisitos para ser miembro</dd>
         </div>
         <div class="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
           <dt class="text-label text-tinta-3">Lead · 19–22 px</dt>
-          <dd class="text-lead text-tinta-2">Trabajamos para promover el conocimiento y el intercambio de ideas sobre el derecho constitucional.</dd>
+          <dd class="text-lead text-tinta-2">Promovemos la investigación y el estudio del Derecho de Seguros y materias afines en Paraguay.</dd>
         </div>
         <div class="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
           <dt class="text-label text-tinta-3">Texto · 17–18 px / 1,7</dt>
           <dd class="max-w-(--container-prose)">
-            La Constitución dispone que el Paraguay se constituye en un Estado social de derecho y que adopta para su gobierno la
-            democracia representativa, participativa y pluralista.
+            El IDSP surge institucionalmente en el año 2005 como corolario de los conversatorios e intercambio de pareceres de un
+            grupo de amigos abogados dedicados al derecho de seguros.
           </dd>
         </div>
         <div class="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
           <dt class="text-label text-tinta-3">Rótulo · 13 px</dt>
-          <dd><span class="label">Opinión</span></dd>
+          <dd><span class="label">Capacitación</span></dd>
         </div>
       </dl>
     </section>
@@ -181,21 +179,21 @@ const contrast = [
       <p class="mb-8 max-w-2xl text-small text-tinta-2">
         Ancho máximo de 68 caracteres por línea (entre 60 y 75 es lo recomendado para lectura continua), interlineado 1,7 y títulos serif.
       </p>
-      <div class="prose-ipdc">
+      <div class="prose-site">
         <p>
-          La Constitución de la República del Paraguay de 1992 es generalmente reconocida como la más democrática en la historia del
-          país. La Constitución contribuyó a fortalecer la transición a la democracia y a instaurar un régimen de libertades
-          públicas en el Paraguay, proceso que se había iniciado en 1989 con la caída de la dictadura militar.
+          El IDSP surge institucionalmente en el año 2005 como corolario de los conversatorios e intercambio de pareceres de un
+          grupo de amigos abogados dedicados al derecho de seguros, en acto solemne realizado en el Aula Magna de la Facultad de
+          Ciencias Jurídicas y Diplomáticas de la Universidad Católica.
         </p>
         <h2>Requisitos</h2>
         <ol>
-          <li>Ser propuesto por al menos dos miembros activos del IPDC.</li>
-          <li>Ser egresado de la carrera de abogacía, con al menos 5 años de antigüedad.</li>
+          <li>Título de abogado o título equivalente (Art. 7º).</li>
+          <li>Ser propuesto por 2 miembros del Consejo Directivo.</li>
         </ol>
         <blockquote>
-          <p>“Más vale diez culpables libres que un inocente preso”.</p>
+          <p>Somos una entidad científica, sin fines de lucro.</p>
         </blockquote>
-        <p>Para más información, escríbanos a <a href="mailto:ipdc.py@gmail.com">ipdc.py@gmail.com</a>.</p>
+        <p>Para más información, <a href="/es/contacto/">contactanos</a>.</p>
       </div>
     </section>
 
@@ -203,8 +201,8 @@ const contrast = [
     <section aria-labelledby="botones">
       <SectionHeading id="botones" eyebrow="05" title="Botones y enlaces" />
       <div class="flex flex-wrap items-center gap-4">
-        <Button href="#botones">Requisitos para ser miembro</Button>
-        <Button href="#botones" variant="secondary">Ver publicaciones</Button>
+        <Button href="#botones">Quiero ser miembro</Button>
+        <Button href="#botones" variant="secondary">Consejo Directivo</Button>
         <Button href="#botones" variant="link" arrow>Conocer más</Button>
       </div>
       <div class="mt-6 flex flex-wrap items-center gap-4 rounded-card bg-azul-950 p-6 on-dark">
@@ -213,100 +211,73 @@ const contrast = [
       <p class="mt-4 text-small text-tinta-2">Área táctil mínima de 44–48 px. Probá con la tecla Tab: el foco siempre es visible.</p>
     </section>
 
-    <!-- Documentos -->
-    <section aria-labelledby="documentos">
-      <SectionHeading id="documentos" eyebrow="06" title="Documentos descargables" />
-      <p class="mb-6 max-w-2xl text-small text-tinta-2">
-        Peso y cantidad de páginas se calculan automáticamente al publicar. Toda la tarjeta es clickeable, pero para lectores de pantalla
-        el enlace es solo el título.
-      </p>
-      <div class="grid gap-4 lg:grid-cols-2">
-        <DocumentCard title="Constitución de la República del Paraguay de 1992" href="/wp-content/uploads/2021/04/constitucion.pdf" docLang="es" />
-        <DocumentCard title="Constitución de 1992 en guaraní" description="Edición Decidamos" href="/wp-content/uploads/2021/04/Leiguasu_edicion_Decidamos.pdf" docLang="gn" />
-        <DocumentCard title="Enmienda a la Constitución de 1992" href="https://www.bacn.gov.py/ENMIENDA_CONSTITUCIONAL_N_1.pdf" year="2011" />
-        <DocumentCard title="Reglamento de Gobierno de 1813" year="1813" available={false} />
-      </div>
-    </section>
-
     <!-- Personas -->
     <section aria-labelledby="personas">
-      <SectionHeading id="personas" eyebrow="07" title="Autoridades y miembros" />
+      <SectionHeading id="personas" eyebrow="06" title="Consejo Directivo" />
       <p class="mb-6 max-w-2xl text-small text-tinta-2">
-        La foto es opcional. Sin foto se muestran las iniciales; al agregarla en el archivo de datos, aparece en Autoridades y en Miembros a la vez.
+        La foto es opcional. Sin foto se muestran las iniciales (sin contar títulos como Dr. o Abg.).
       </p>
       <div class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
-        <PersonCard name="Robert Marcial González" role="Presidente" photo={robert} />
-        <PersonCard name="Elodia Almirón" role="Vice-Presidenta" />
-        <PersonCard name="Manuel Riera" role="Secretario General" />
-        <PersonCard name="Laura Whittingslow" role="Tesorera" />
-        <PersonCard name="Jorge Seall-Sasiain" memoriam />
+        <PersonCard name="Dr. Mario Módica Lucente" role="Presidente" />
+        <PersonCard name="Abg. Miguel Angel Berni" role="Vicepresidente" />
+        <PersonCard name="Abg. Zunilda Benavente" role="Miembro titular" />
+        <PersonCard name="Abg. Juan Francisco Perez Saldivar" role="Comisión Revisora de Cuentas" />
       </div>
     </section>
 
     <!-- Blog y eventos -->
     <section aria-labelledby="tarjetas">
-      <SectionHeading id="tarjetas" eyebrow="08" title="Blog y eventos" />
+      <SectionHeading id="tarjetas" eyebrow="07" title="Blog y eventos" />
+      <p class="mb-6 max-w-2xl text-small text-tinta-2">Contenido de ejemplo: el blog y los eventos del IDSP todavía no tienen entradas.</p>
       <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
         <PostCard
-          title="Un aplauso para el cirujano del cartismo"
+          title="Título de una entrada de opinión"
           href="#tarjetas"
-          date={new Date('2025-08-10')}
-          authors={['Robert Marcial González']}
+          date={new Date('2026-11-01')}
+          authors={['Nombre del autor']}
           category="Opinión"
-          excerpt="El revuelo suscitado por la valiente investigación periodística que puso al descubierto que una Senadora al servicio del cartismo, hacía pagar con recursos del erario público la remuneración de dos sobrinas…"
+          excerpt="Resumen breve de la entrada, de unos 150 caracteres, que se muestra en las tarjetas y en los buscadores."
         />
         <PostCard
-          title="¿La hará cumplir?"
+          title="Charla formativa sobre Derecho de Seguros"
           href="#tarjetas"
-          date={new Date('2025-06-07')}
-          authors={['Manuel Riera D.']}
-          category="Opinión"
-          excerpt="El 14 de febrero de 2024, la senadora Kattya Mabel González Villanueva perdió su investidura."
-        />
-        <PostCard
-          title="Roberto Gargarella en Paraguay: Jornadas de Debate sobre Derecho Constitucional"
-          href="#tarjetas"
-          date={new Date('2024-11-20')}
+          date={new Date('2026-10-15')}
           category="Noticias y eventos"
-          excerpt="¡No te pierdas las Jornadas de Debate de Derecho Constitucional con Roberto Gargarella!"
+          excerpt="Ejemplo de noticia sin autor."
         />
       </div>
       <div class="mt-12 max-w-2xl">
         <EventCard
-          title="I Congreso Paraguayo de Derecho Constitucional"
+          title="Diplomado en Derecho de Seguros"
           href="#tarjetas"
-          startDate={new Date('2021-11-24')}
-          endDate={new Date('2021-11-25')}
+          startDate={new Date('2027-03-01')}
           location="Asunción"
-          modality="Virtual y presencial"
+          modality="Presencial"
         />
       </div>
     </section>
 
     <!-- Acordeón y avisos -->
     <section aria-labelledby="acordeon">
-      <SectionHeading id="acordeon" eyebrow="09" title="Acordeón y avisos" />
+      <SectionHeading id="acordeon" eyebrow="08" title="Acordeón y avisos" />
       <div class="grid gap-12 lg:grid-cols-2">
         <div class="border-t border-linea">
-          <Accordion title="Congresos, seminarios y charlas" open>
-            <p>
-              El IPDC organiza y apoya la realización de congresos, seminarios, conferencias y charlas sobre temas variados del
-              derecho constitucional, ya sean de derecho constitucional paraguayo, extranjero o comparado.
-            </p>
+          <Accordion title="Capacitación" open>
+            <p>Cursos (Diplomado) de formación en Derecho de Seguros.</p>
           </Accordion>
-          <Accordion title="Cursos">
-            <p>El IPDC apoya la organización de cursos con universidades y distintos centros de formación y educación continua.</p>
+          <Accordion title="Charlas">
+            <p>Charlas formativas sobre diferentes temas del Derecho de Seguros.</p>
           </Accordion>
-          <Accordion title="Capítulo paraguayo del IIDC">
-            <p>El IPDC es el capítulo paraguayo del Instituto Iberoamericano de Derecho Constitucional.</p>
+          <Accordion title="Dictámenes">
+            <p>Dictámenes con respecto a proyectos o modificaciones de disposiciones legales que hacen a esta rama del Derecho.</p>
           </Accordion>
         </div>
         <Callout class="self-start">
           <p>
             <strong>
               Las opiniones y puntos de vista expresados en este blog son exclusivamente responsabilidad de los autores y no
-              representan de ninguna manera la posición oficial del Instituto Paraguayo de Derecho Constitucional, ni la de su
-              Comisión Directiva.
+              representan de ninguna manera la posición oficial del Instituto de Derecho de Seguros del Paraguay, ni la de su
+              Consejo Directivo.
             </strong>
           </p>
         </Callout>
@@ -315,7 +286,7 @@ const contrast = [
 
     <!-- Navegación -->
     <section aria-labelledby="navegacion">
-      <SectionHeading id="navegacion" eyebrow="10" title="Paginación y newsletter" />
+      <SectionHeading id="navegacion" eyebrow="09" title="Paginación y newsletter" />
       <Pagination current={2} total={3} url={(n) => `#p${n}`} />
       <div class="mt-14 max-w-2xl rounded-card border border-linea bg-white p-6 sm:p-8">
         <Newsletter lang="es" id="demo-newsletter" />
@@ -326,9 +297,9 @@ const contrast = [
   <!-- Cabecera con foto -->
   <section aria-label="Cabecera con fotografía">
     <PageHeader
-      eyebrow="Conocé la Constitución"
-      title="Constitución de 1992"
-      lead="La Constitución de la República del Paraguay de 1992 es generalmente reconocida como la más democrática en la historia del país."
+      eyebrow="El Instituto"
+      title="Qué ofrecemos"
+      lead="Somos una entidad científica, sin fines de lucro, con el fin principal de promover la investigación y el estudio del Derecho de Seguros y materias afines."
       image={panteon}
       imageAlt="Cúpula del Panteón Nacional de los Héroes, en Asunción, al anochecer"
     />

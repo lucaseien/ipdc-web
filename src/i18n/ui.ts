@@ -6,7 +6,7 @@ export const defaultLang: Lang = 'es';
 export const ui = {
   es: {
     'site.tagline':
-      'Trabajamos para promover el conocimiento y el intercambio de ideas sobre el derecho constitucional como una manera de contribuir al fortalecimiento de la democracia en Paraguay',
+      'Entidad científica sin fines de lucro dedicada a promover la investigación y el estudio del Derecho de Seguros y materias afines',
     'a11y.skip': 'Saltar al contenido',
     'a11y.mainNav': 'Navegación principal',
     'a11y.breadcrumbs': 'Ruta de navegación',
@@ -20,7 +20,7 @@ export const ui = {
     'footer.resources': 'Recursos',
     'footer.contact': 'Contacto',
     'footer.follow': 'Redes sociales',
-    'footer.rights': 'Instituto Paraguayo de Derecho Constitucional. Todos los derechos reservados.',
+    'footer.rights': 'Instituto de Derecho de Seguros del Paraguay. Todos los derechos reservados.',
     'doc.download': 'Descargar',
     'doc.open': 'Abrir',
     'doc.pages': 'págs.',
@@ -36,7 +36,7 @@ export const ui = {
     'post.next': 'Siguiente',
     'post.page': 'Página',
     // Texto original del sitio anterior
-    'newsletter.title': 'Deje su correo y entérese de las actividades del IPDC',
+    'newsletter.title': 'Deje su correo y entérese de las actividades del IDSP',
     'newsletter.email': 'Correo electrónico',
     'newsletter.submit': 'Suscribirme',
     'newsletter.soon': 'La suscripción estará disponible en breve.',

@@ -1,63 +1,36 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
-import PersonCard from '@/components/PersonCard.astro';
 import Button from '@/components/Button.astro';
-import { byListName, getPage, personPhoto } from '@/lib/content';
+import { getPage } from '@/lib/content';
+import { membershipHref } from '@/config/site';
+import foto from '@/assets/fotos/catedral.jpg';
 
 const page = await getPage('miembros');
 const requisitos = await getPage('requisitos-miembro');
 const { Content } = await render(page);
 const { Content: Requisitos } = await render(requisitos);
-
-const personas = (await getCollection('personas')).filter((p) => p.data.member).sort(byListName);
-const activos = personas.filter((p) => !p.data.memoriam);
-const memoriam = personas.filter((p) => p.data.memoriam);
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
   <PageHeader
     eyebrow="El Instituto"
     title={page.data.title}
+    lead={page.data.lead}
+    image={foto}
+    imageAlt="Catedral Metropolitana de Asunción reflejada en un charco tras la lluvia"
     breadcrumbs={[{ label: 'Inicio', href: '/es/' }, { label: 'El Instituto', href: '/es/instituto/' }, { label: page.data.title }]}
-  >
-    <p class="mt-6"><Button href="#requisitos" variant="secondary">Requisitos para ser miembro</Button></p>
-  </PageHeader>
+  />
 
   <div class="container-page py-16 sm:py-20">
-    <div class="prose-ipdc mb-14"><Content /></div>
+    <div class="prose-site mb-14"><Content /></div>
 
-    <section aria-labelledby="lista-miembros">
-      <SectionHeading id="lista-miembros" title="Lista de miembros" />
-      <ul class="grid grid-cols-3 gap-x-3 gap-y-6 sm:grid-cols-4 sm:gap-x-5 md:grid-cols-5 lg:grid-cols-6">
-        {
-          activos.map((p) => (
-            <li>
-              <PersonCard name={p.data.name} photo={personPhoto(p.data.photo)} size="sm" />
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <section aria-labelledby="in-memoriam" class="mt-20">
-      <SectionHeading id="in-memoriam" title="In Memoriam (+)" />
-      <ul class="grid grid-cols-3 gap-x-3 gap-y-6 sm:grid-cols-4 sm:gap-x-5 md:grid-cols-5 lg:grid-cols-6">
-        {
-          memoriam.map((p) => (
-            <li>
-              <PersonCard name={p.data.name} photo={personPhoto(p.data.photo)} size="sm" memoriam />
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <section id="requisitos" aria-labelledby="requisitos-titulo" class="mt-24 scroll-mt-28 rounded-card border border-linea bg-white p-6 sm:p-10 lg:p-12">
+    <section id="requisitos" aria-labelledby="requisitos-titulo" class="scroll-mt-28 rounded-card border border-linea bg-white p-6 sm:p-10 lg:p-12">
       <SectionHeading id="requisitos-titulo" eyebrow="Cómo ser miembro" title={requisitos.data.title} />
-      <div class="prose-ipdc"><Requisitos /></div>
+      <div class="prose-site"><Requisitos /></div>
+      <p class="mt-10"><Button href={membershipHref} arrow>Quiero ser miembro</Button></p>
     </section>
   </div>
 </BaseLayout>

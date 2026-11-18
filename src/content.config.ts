@@ -88,7 +88,7 @@ const personas = defineCollection({
   }),
 });
 
-/** Comisiones Directivas: src/content/comisiones.yaml */
+/** Consejos Directivos: src/content/comisiones.yaml */
 const comisiones = defineCollection({
   loader: file('src/content/comisiones.yaml'),
   schema: z.object({
@@ -98,34 +98,4 @@ const comisiones = defineCollection({
   }),
 });
 
-/** Ediciones del Anuario Paraguayo de Derecho Constitucional: src/content/anuarios.yaml */
-const anuarios = defineCollection({
-  loader: file('src/content/anuarios.yaml'),
-  schema: z.object({
-    year: z.number().int(),
-    title: z.string(),
-    /** PDF del índice, en /public */
-    indexPdf: z.string().startsWith('/'),
-  }),
-});
-
-/** Documentos descargables: src/content/documentos.yaml */
-const documentos = defineCollection({
-  loader: file('src/content/documentos.yaml'),
-  schema: z
-    .object({
-      title: z.string(),
-      group: z.enum(['constitucion-1992', 'historicas']),
-      order: z.number(),
-      year: z.union([z.number(), z.string()]).optional(),
-      lang: z.enum(['es', 'gn', 'en']).default('es'),
-      description: z.string().optional(),
-      /** Archivo en /public (se calcula peso y páginas) */
-      file: z.string().startsWith('/').optional(),
-      /** Enlace externo */
-      url: z.url().optional(),
-    })
-    .refine((d) => !(d.file && d.url), { message: 'Usar `file` o `url`, no ambos' }),
-});
-
-export const collections = { blog, eventos, paginas, personas, comisiones, anuarios, documentos };
+export const collections = { blog, eventos, paginas, personas, comisiones };

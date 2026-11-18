@@ -9,6 +9,7 @@ import Icon from '@/components/Icon.astro';
 import Button from '@/components/Button.astro';
 import { formatDate } from '@/lib/format';
 import { getEvents, slugOf, type Evento } from '@/lib/content';
+import { site } from '@/config/site';
 
 export async function getStaticPaths() {
   const { upcoming, past } = await getEvents('es');
@@ -37,7 +38,7 @@ const jsonLd = {
   eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
   eventStatus: 'https://schema.org/EventScheduled',
   location: { '@type': 'Place', name: d.location, address: d.address ?? d.location },
-  organizer: { '@id': 'https://ipdc.org.py/#organization' },
+  organizer: { '@id': `${site.url}/#organization` },
 };
 ---
 
@@ -51,24 +52,24 @@ const jsonLd = {
 
   <div class="container-page grid gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:gap-16">
     <div class="lg:col-span-7">
-      <div class="prose-ipdc [&_h2:first-child]:mt-0"><Content /></div>
+      <div class="prose-site [&_h2:first-child]:mt-0"><Content /></div>
     </div>
     <aside class="lg:col-span-5">
       <dl class="space-y-5 rounded-card border border-linea bg-white p-6 shadow-card">
         <div>
-          <dt class="label flex items-center gap-3 text-tinta-3"><Icon name="calendar" class="size-5 text-rojo-600" />Fecha</dt>
+          <dt class="label flex items-center gap-3 text-tinta-3"><Icon name="calendar" class="size-5 text-celeste-600" />Fecha</dt>
           <dd class="mt-1 pl-8 font-semibold">{when}</dd>
         </div>
         {d.location && (
           <div>
-            <dt class="label flex items-center gap-3 text-tinta-3"><Icon name="pin" class="size-5 text-rojo-600" />Lugar</dt>
+            <dt class="label flex items-center gap-3 text-tinta-3"><Icon name="pin" class="size-5 text-celeste-600" />Lugar</dt>
             <dd class="mt-1 pl-8 font-semibold">{d.location}</dd>
             {d.address && <dd class="pl-8 text-small text-tinta-2">{d.address}</dd>}
           </div>
         )}
         {d.modality && (
           <div>
-            <dt class="label flex items-center gap-3 text-tinta-3"><Icon name="screen" class="size-5 text-rojo-600" />Modalidad</dt>
+            <dt class="label flex items-center gap-3 text-tinta-3"><Icon name="screen" class="size-5 text-celeste-600" />Modalidad</dt>
             <dd class="mt-1 pl-8 font-semibold">{d.modality}</dd>
           </div>
         )}

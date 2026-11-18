@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 import netlifyRedirects from './src/integrations/netlify-redirects';
 
 export default defineConfig({
-  site: 'https://ipdc.org.py',
+  site: 'https://idsp.com.py',
   trailingSlash: 'always',
   // El CSS va dentro del HTML: evita una petición que bloquea el primer render en celulares.
   build: { inlineStylesheets: 'always' },

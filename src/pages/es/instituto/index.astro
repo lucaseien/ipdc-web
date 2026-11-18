@@ -3,7 +3,6 @@ import { render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import Button from '@/components/Button.astro';
-import Icon from '@/components/Icon.astro';
 import { getPage } from '@/lib/content';
 import foto from '@/assets/fotos/cabildo-reflejo.jpg';
 
@@ -25,32 +24,18 @@ const { Content } = await render(page);
     <nav aria-label="En esta página" class="hidden lg:col-span-3 lg:block">
       <ul class="sticky top-28 space-y-2 border-l-2 border-linea pl-4 text-small">
         <li><a href="#el-instituto" class="text-tinta-2 no-underline hover:text-azul-700">El Instituto</a></li>
-        <li><a href="#historia" class="text-tinta-2 no-underline hover:text-azul-700">Reseña histórica</a></li>
+        <li><a href="#historia" class="text-tinta-2 no-underline hover:text-azul-700">Historia</a></li>
       </ul>
     </nav>
     <div class="lg:col-span-9">
-      <div class="prose-ipdc [&_h2:first-child]:mt-0">
+      <div class="prose-site [&_h2:first-child]:mt-0">
         <Content />
       </div>
 
-      <!-- Reemplaza al banner "IDPC es el Capítulo Paraguayo del IIDC" (imagen con error de tipeo) -->
-      <aside class="mt-14 flex max-w-(--container-prose) flex-col gap-5 overflow-hidden rounded-card border border-linea bg-white sm:flex-row" aria-label="Capítulo del IIDC">
-        <div class="flex w-full shrink-0 sm:w-3 sm:flex-col" aria-hidden="true"><span class="h-2 flex-1 bg-rojo-600 sm:h-auto"></span><span class="h-2 flex-1 bg-azul-700 sm:h-auto"></span></div>
-        <div class="px-6 pb-6 sm:py-6 sm:pr-8 sm:pl-2">
-          <p class="font-serif text-h3 leading-snug text-azul-900">
-            El IPDC es el <span class="text-rojo-700">Capítulo</span> <span class="text-azul-700">Paraguayo</span> del
-            <strong class="block font-semibold">Instituto Iberoamericano de Derecho Constitucional</strong>
-          </p>
-          <a href="https://iidc.juridicas.unam.mx/" class="mt-4 inline-flex items-center gap-2 font-semibold" rel="noopener">
-            Conoce más sobre el IIDC <Icon name="external" class="size-4" />
-          </a>
-        </div>
-      </aside>
-
       <div class="mt-14 flex flex-wrap gap-3">
-        <Button href="/es/instituto/que-hacemos/" arrow>Qué hacemos</Button>
-        <Button href="/es/instituto/autoridades/" variant="secondary">Autoridades</Button>
-        <Button href="/es/instituto/miembros/" variant="secondary">Miembros</Button>
+        <Button href="/es/instituto/que-hacemos/" arrow>Qué ofrecemos</Button>
+        <Button href="/es/instituto/autoridades/" variant="secondary">Consejo Directivo</Button>
+        <Button href="/es/instituto/miembros/" variant="secondary">Ser miembro</Button>
       </div>
     </div>
   </div>

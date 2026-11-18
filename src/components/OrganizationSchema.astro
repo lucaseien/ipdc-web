@@ -9,12 +9,11 @@ const data = {
   name: site.name,
   alternateName: site.shortName,
   url: `${site.url}/es/`,
-  logo: `${site.url}/logo-ipdc.png`,
-  email: site.email,
+  logo: `${site.url}/logo-idsp.png`,
+  email: site.email || undefined,
   foundingDate: site.foundingDate,
   address: { '@type': 'PostalAddress', addressLocality: site.location.city, addressCountry: site.location.countryCode },
-  sameAs: Object.values(site.social),
-  memberOf: { '@type': 'Organization', name: 'Instituto Iberoamericano de Derecho Constitucional', url: 'https://iidc.juridicas.unam.mx/' },
+  sameAs: Object.values(site.social).filter(Boolean),
 };
 ---
 

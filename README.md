@@ -390,3 +390,6 @@ axe (accesibilidad automática): 0 problemas en las 37 páginas, a 390 px y 1280
 - **Logo vectorial** original, si existe.
 - **Fotos** de autoridades y miembros (opcionales).
 - **Traducción al inglés** (más adelante).
+
+
+http://localhost:4321/es/guia-de-estilo/

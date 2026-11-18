@@ -1,9 +1,10 @@
 ---
-import logoSvg from '@/assets/brand/logo-ipdc.svg?raw';
+import { Image } from 'astro:assets';
+import logo from '@/assets/brand/logo-idsp.png';
 import { site } from '@/config/site';
 
 interface Props {
-  /** `full`: isotipo + nombre completo; `mark`: solo el isotipo */
+  /** `full`: sello + nombre completo; `mark`: solo el sello */
   variant?: 'full' | 'mark';
   /** Tono del nombre: sobre fondo claro u oscuro */
   tone?: 'light' | 'dark';
@@ -11,15 +12,11 @@ interface Props {
 }
 
 const { variant = 'full', tone = 'light', class: className } = Astro.props;
-// El isotipo es decorativo: el nombre accesible lo da el enlace o el texto que lo acompaña.
-const mark = logoSvg.replace('<svg ', '<svg aria-hidden="true" focusable="false" class="size-full" ').replace(/<title>.*?<\/title>/, '');
+// El sello es decorativo: el nombre accesible lo da el enlace o el texto que lo acompaña.
 ---
 
 <span class:list={['inline-flex items-center gap-3', className]}>
-  <span
-    class:list={['block size-11 shrink-0 sm:size-12', tone === 'dark' && 'rounded-full bg-white p-1']}
-    set:html={mark}
-  />
+  <Image src={logo} alt="" width={56} height={56} densities={[1, 2, 3]} loading="eager" class="block size-12 shrink-0 sm:size-14" />
   {
     variant === 'full' && (
       <span
