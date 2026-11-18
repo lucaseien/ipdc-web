@@ -48,7 +48,7 @@ const jsonLd = {
         <Breadcrumbs items={[{ label: 'Inicio', href: '/es/' }, { label: 'Blog', href: '/es/blog/' }, { label: d.title }]} />
         <div class="mx-auto mt-10 max-w-(--container-prose)">
           <p class="label">
-            <a href={`/es/blog/categoria/${d.category}/`} class="text-rojo-700 no-underline hover:underline">{categories[d.category]}</a>
+            <a href={`/es/blog/categoria/${d.category}/`} class="text-celeste-700 no-underline hover:underline">{categories[d.category]}</a>
           </p>
           <h1 class="mt-3 text-h1 font-medium">{d.title}</h1>
           <span class="filete mt-6" aria-hidden="true"></span>
@@ -72,7 +72,7 @@ const jsonLd = {
     </header>
 
     <div class="container-page py-12 sm:py-16">
-      <div class="prose-ipdc mx-auto [&_.footnotes]:mt-14 [&_.footnotes]:border-t [&_.footnotes]:border-linea [&_.footnotes]:pt-6 [&_.footnotes]:text-small">
+      <div class="prose-site mx-auto [&_.footnotes]:mt-14 [&_.footnotes]:border-t [&_.footnotes]:border-linea [&_.footnotes]:pt-6 [&_.footnotes]:text-small">
         <Content />
       </div>
       <div class="mx-auto mt-14 max-w-(--container-prose)">

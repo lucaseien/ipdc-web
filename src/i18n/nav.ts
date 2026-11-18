@@ -14,18 +14,9 @@ export const mainNav: Record<Lang, NavItem[]> = {
       href: '/es/instituto/',
       children: [
         { label: 'Quiénes somos', href: '/es/instituto/' },
-        { label: 'Qué hacemos', href: '/es/instituto/que-hacemos/' },
-        { label: 'Autoridades', href: '/es/instituto/autoridades/' },
-        { label: 'Miembros', href: '/es/instituto/miembros/' },
-      ],
-    },
-    { label: 'Publicaciones', href: '/es/publicaciones/' },
-    {
-      label: 'Constitución',
-      href: '/es/constitucion/',
-      children: [
-        { label: 'Constitución de 1992', href: '/es/constitucion/' },
-        { label: 'Constituciones históricas', href: '/es/constitucion/historicas/' },
+        { label: 'Qué ofrecemos', href: '/es/instituto/que-hacemos/' },
+        { label: 'Consejo Directivo', href: '/es/instituto/autoridades/' },
+        { label: 'Ser miembro', href: '/es/instituto/miembros/' },
       ],
     },
     { label: 'Eventos', href: '/es/eventos/' },

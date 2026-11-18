@@ -36,13 +36,13 @@ const range = !endDate
       <a href={href} class="no-underline after:absolute after:inset-0 group-hover:underline">{title}</a>
     </H>
     <p class="mt-2 flex items-center gap-2 text-small text-tinta-2">
-      <Icon name="calendar" class="size-4 text-rojo-600" />
+      <Icon name="calendar" class="size-4 text-celeste-600" />
       <span>{range}</span>
     </p>
     {
       location && (
         <p class="mt-1 flex items-center gap-2 text-small text-tinta-2">
-          <Icon name="pin" class="size-4 text-rojo-600" />
+          <Icon name="pin" class="size-4 text-celeste-600" />
           <span>{location}{modality && ` · ${modality}`}</span>
         </p>
       )

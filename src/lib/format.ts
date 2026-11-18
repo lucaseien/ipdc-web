@@ -28,7 +28,7 @@ export function dateParts(date: Date, lang: Lang = 'es') {
 
 /** "Robert Marcial González" → "RG" */
 export function initials(name: string): string {
-  const words = name.replace(/\(.*?\)/g, '').trim().split(/\s+/).filter((w) => /^\p{Lu}/u.test(w));
+  const words = name.replace(/\(.*?\)/g, '').trim().split(/\s+/).filter((w) => /^\p{Lu}/u.test(w) && !w.endsWith('.')); // ignora títulos: Dr., Abg.
   const picked = words.length > 1 ? [words[0], words[words.length - 1]] : words;
   return picked.map((w) => w[0]).join('').toUpperCase();
 }

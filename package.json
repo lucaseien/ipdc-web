@@ -1,5 +1,5 @@
 {
-  "name": "ipdc-web",
+  "name": "idsp-web",
   "type": "module",
   "version": "1.0.0",
   "private": true,
@@ -8,8 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro",
-    "check:redirects": "node scripts/check-redirects.mjs"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.2",

@@ -20,7 +20,7 @@ const isActive = (href: string, children?: { href: string }[]) =>
 ---
 
 <header class="sticky top-0 z-40 border-b border-linea bg-papel/95 backdrop-blur supports-[backdrop-filter]:bg-papel/85">
-  <div class="flex h-1" aria-hidden="true"><span class="flex-1 bg-rojo-600"></span><span class="flex-1 bg-azul-700"></span></div>
+  <div class="flex h-1" aria-hidden="true"><span class="flex-1 bg-celeste-600"></span><span class="flex-1 bg-azul-700"></span></div>
   <div class="container-page flex h-[4.5rem] items-center justify-between gap-6">
     <a href={`/${lang}/`} class="no-underline">
       <Logo />
@@ -109,7 +109,7 @@ const isActive = (href: string, children?: { href: string }[]) =>
                     <li>
                       <a
                         href={child.href}
-                        class="flex min-h-12 items-center font-serif text-[1.25rem] text-azul-900 no-underline aria-[current=page]:text-rojo-700"
+                        class="flex min-h-12 items-center font-serif text-[1.25rem] text-azul-900 no-underline aria-[current=page]:text-celeste-700"
                         aria-current={isCurrent(child.href) ? 'page' : undefined}
                       >
                         {child.label}
@@ -121,7 +121,7 @@ const isActive = (href: string, children?: { href: string }[]) =>
             ) : (
               <a
                 href={item.href}
-                class="flex min-h-14 items-center font-serif text-[1.25rem] text-azul-900 no-underline aria-[current=page]:text-rojo-700"
+                class="flex min-h-14 items-center font-serif text-[1.25rem] text-azul-900 no-underline aria-[current=page]:text-celeste-700"
                 aria-current={isCurrent(item.href) ? 'page' : undefined}
               >
                 {item.label}
@@ -141,7 +141,7 @@ const isActive = (href: string, children?: { href: string }[]) =>
   }
   .nav-link--active::after {
     content: '';
-    @apply absolute right-3 -bottom-0.5 left-3 h-0.5 bg-rojo-600;
+    @apply absolute right-3 -bottom-0.5 left-3 h-0.5 bg-celeste-600;
   }
   [aria-expanded='true'] > :global(svg) {
     transform: rotate(180deg);

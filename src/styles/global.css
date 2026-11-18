@@ -6,8 +6,8 @@
 @plugin '@tailwindcss/typography';
 
 /*
- * Sistema de diseño IPDC
- * Colores tomados del logo: azul #193389 y rojo #C71B2E.
+ * Sistema de diseño IDSP
+ * Colores tomados del logo: azul #004890 y celeste #1A9CC8.
  * Todas las combinaciones de texto cumplen WCAG 2.1 AA (ver guía de estilo).
  */
 @theme {
@@ -17,19 +17,19 @@
   --color-current: currentColor;
 
   /* Azul institucional (logo) */
-  --color-azul-50: #f3f5fb;
-  --color-azul-100: #e7ecf8;
-  --color-azul-200: #c9d3ee;
-  --color-azul-600: #2845a6;
-  --color-azul-700: #193389;
-  --color-azul-800: #152a70;
-  --color-azul-900: #10204f;
-  --color-azul-950: #0c1636;
+  --color-azul-50: #f2f7fc;
+  --color-azul-100: #e4eef8;
+  --color-azul-200: #c5d8ee;
+  --color-azul-600: #1a5eab;
+  --color-azul-700: #004890;
+  --color-azul-800: #003a75;
+  --color-azul-900: #00254d;
+  --color-azul-950: #001a38;
 
-  /* Rojo (logo): acento, nunca como color de texto largo */
-  --color-rojo-100: #fbe7e9;
-  --color-rojo-600: #c71b2e;
-  --color-rojo-700: #a8172a;
+  /* Celeste (logo): acento. El 600 es decorativo (filetes, íconos); para texto usar el 700 */
+  --color-celeste-100: #e2f3fa;
+  --color-celeste-600: #1a9cc8;
+  --color-celeste-700: #0a6d93;
 
   /* Neutros cálidos, "papel y tinta" */
   --color-papel: #faf8f4;
@@ -64,8 +64,8 @@
   --container-page: 76rem;
 
   --radius-card: 0.375rem;
-  --shadow-card: 0 1px 2px rgb(16 32 79 / 0.06), 0 4px 16px -6px rgb(16 32 79 / 0.12);
-  --shadow-card-hover: 0 2px 4px rgb(16 32 79 / 0.08), 0 12px 28px -10px rgb(16 32 79 / 0.22);
+  --shadow-card: 0 1px 2px rgb(0 37 77 / 0.06), 0 4px 16px -6px rgb(0 37 77 / 0.12);
+  --shadow-card-hover: 0 2px 4px rgb(0 37 77 / 0.08), 0 12px 28px -10px rgb(0 37 77 / 0.22);
 }
 
 @layer base {
@@ -111,24 +111,24 @@
   .container-page { @apply mx-auto w-full max-w-(--container-page) px-4 sm:px-6 lg:px-8; }
 
   /* Rótulo pequeño en versalitas, usado como "eyebrow" sobre los títulos */
-  .label { @apply font-sans text-label font-semibold tracking-[0.09em] uppercase text-rojo-700; }
+  .label { @apply font-sans text-label font-semibold tracking-[0.09em] uppercase text-celeste-700; }
 
-  /* Filete bicolor rojo/azul inspirado en el banner institucional */
-  .filete { @apply block h-1 w-14; background: linear-gradient(90deg, var(--color-rojo-600) 50%, var(--color-azul-700) 50%); }
+  /* Filete bicolor celeste/azul, colores del logo */
+  .filete { @apply block h-1 w-14; background: linear-gradient(90deg, var(--color-celeste-600) 50%, var(--color-azul-700) 50%); }
 
   /* Texto largo: ancho de lectura, jerarquía clara */
-  .prose-ipdc {
+  .prose-site {
     @apply prose max-w-(--container-prose) text-body;
     --tw-prose-body: var(--color-tinta);
     --tw-prose-headings: var(--color-azul-900);
     --tw-prose-lead: var(--color-tinta-2);
     --tw-prose-links: var(--color-azul-700);
     --tw-prose-bold: var(--color-tinta);
-    --tw-prose-counters: var(--color-rojo-700);
-    --tw-prose-bullets: var(--color-rojo-600);
+    --tw-prose-counters: var(--color-celeste-700);
+    --tw-prose-bullets: var(--color-celeste-600);
     --tw-prose-hr: var(--color-linea);
     --tw-prose-quotes: var(--color-azul-900);
-    --tw-prose-quote-borders: var(--color-rojo-600);
+    --tw-prose-quote-borders: var(--color-celeste-600);
     --tw-prose-captions: var(--color-tinta-3);
     --tw-prose-th-borders: var(--color-linea);
     --tw-prose-td-borders: var(--color-linea);
@@ -136,13 +136,13 @@
     overflow-wrap: break-word;
   }
   /* URLs largas escritas como texto no deben desbordar en celulares */
-  .prose-ipdc :where(a) { overflow-wrap: anywhere; }
-  .prose-ipdc :where(h2, h3, h4) { @apply font-serif font-semibold; }
-  .prose-ipdc :where(h2) { @apply text-h2 mt-[1.8em] mb-[0.6em]; }
-  .prose-ipdc :where(h3) { @apply text-h3; }
-  .prose-ipdc :where(blockquote) { @apply font-serif text-lead not-italic font-normal; }
-  .prose-ipdc blockquote p:first-of-type::before,
-  .prose-ipdc blockquote p:last-of-type::after { content: none; }
-  .prose-ipdc :where(a):hover { @apply decoration-2; }
-  .prose-ipdc :where(img) { @apply rounded-card; }
+  .prose-site :where(a) { overflow-wrap: anywhere; }
+  .prose-site :where(h2, h3, h4) { @apply font-serif font-semibold; }
+  .prose-site :where(h2) { @apply text-h2 mt-[1.8em] mb-[0.6em]; }
+  .prose-site :where(h3) { @apply text-h3; }
+  .prose-site :where(blockquote) { @apply font-serif text-lead not-italic font-normal; }
+  .prose-site blockquote p:first-of-type::before,
+  .prose-site blockquote p:last-of-type::after { content: none; }
+  .prose-site :where(a):hover { @apply decoration-2; }
+  .prose-site :where(img) { @apply rounded-card; }
 }

@@ -7,7 +7,7 @@ export async function GET(context: APIContext) {
   const posts = await getPosts('es');
   return rss({
     title: `Blog del ${site.shortName}`,
-    description: 'Opiniones, reflexiones y análisis sobre derecho constitucional.',
+    description: 'Noticias, opiniones y análisis sobre Derecho de Seguros.',
     site: context.site!,
     items: posts.map((p) => ({
       title: p.data.title,

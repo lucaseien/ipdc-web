@@ -1,162 +1,32 @@
-# Personas: autoridades y miembros del IPDC.
+# Personas: autoridades y miembros del IDSP.
 # - id: identificador único (se usa en comisiones.yaml).
 # - name: nombre como se muestra en las tarjetas.
 # - listName: "Apellido, Nombre", define el orden alfabético.
-# - photo: (opcional) nombre del archivo en src/assets/personas/, p. ej. robert-marcial-gonzalez.jpg
+# - photo: (opcional) nombre del archivo en src/assets/personas/, p. ej. mario-modica-lucente.jpg
 # - member: false si la persona no integra la lista de miembros.
-# - memoriam: true para miembros fallecidos (sección In Memoriam).
+# - memoriam: true para miembros fallecidos.
 
-- id: gonzalo-alonso
-  name: Gonzalo Alonso
-  listName: Alonso, Gonzalo
-- id: fatima-andrada-pasmor
-  name: Fátima Andrada Pasmor
-  listName: Andrada, Fátima
-- id: elodia-almiron
-  name: Elodia Almirón
-  listName: Almirón, Elodia
-- id: habib-apud
-  name: Habib Apud
-  listName: Apud, Habib
-- id: eusebio-ramon-ayala
-  name: Eusebio Ramón Ayala
-  listName: Ayala, Eusebio Ramón
-- id: gustavo-boveda
-  name: Gustavo Bóveda
-  listName: Bóveda, Gustavo
-- id: jose-maria-cabral
-  name: José María Cabral
-  listName: Cabral, José María
-- id: emilio-camacho
-  name: Emilio Camacho
-  listName: Camacho, Emilio
-- id: rodrigo-campos-cervera
-  name: Rodrigo Campos Cervera
-  listName: Campos Cervera, Rodrigo
-- id: fermin-canteros
-  name: Fermín Canteros
-  listName: Canteros, Fermín
-- id: renzo-cristaldo
-  name: Renzo Cristaldo
-  listName: Cristaldo, Renzo
-- id: ariana-escobar
-  name: Ariana Escobar
-  listName: Escobar, Ariana
-- id: camilo-filartiga
-  name: Camilo Filártiga
-  listName: Filártiga, Camilo
-- id: rafael-filizzola
-  name: Rafael Filizzola
-  listName: Filizzola, Rafael
-- id: shirley-franco
-  name: Shirley Franco
-  listName: Franco, Shirley
-- id: luis-fretes-carreras
-  name: Luis Fretes Carreras
-  listName: Fretes Carreras, Luis
-- id: paula-gamarra
-  name: Paula Gamarra
-  listName: Gamarra, Paula
-- id: nicolas-gaona-irun
-  name: Nicolás Gaona Irún
-  listName: Gaona Irún, Nicolás
-- id: robert-marcial-gonzalez
-  name: Robert Marcial González
-  listName: González, Robert Marcial
-- id: gustavo-laterza
-  name: Gustavo Laterza
-  listName: Laterza, Gustavo
-- id: luis-lezcano-claude
-  name: Luis Lezcano Claude
-  listName: Lezcano Claude, Luis
-- id: adriana-marecos
-  name: Adriana Marecos
-  listName: Marecos, Adriana
-- id: enrique-marin-fontclara
-  name: Enrique Marín Fontclara
-  listName: Marín Fontclara, Enrique
-- id: jorge-melgarejo
-  name: Jorge Melgarejo
-  listName: Melgarejo, Jorge
-- id: daniel-mendonca
-  name: Daniel Mendonca
-  listName: Mendonca, Daniel
-- id: juan-carlos-mendonca-bonnet
-  name: Juan Carlos Mendonca Bonnet
-  listName: Mendonca, Juan Carlos
-- id: diego-moreno-rodriguez-alcala
-  name: Diego Moreno Rodríguez-Alcalá
-  listName: Moreno, Diego
-- id: juan-martin-palacios
-  name: Juan Martín Palacios
-  listName: Palacios, Juan Martín
-- id: giovanna-parini
-  name: Giovanna Parini
-  listName: Parini, Giovanna
-- id: mario-paz-castaing
-  name: Mario Paz Castaing
-  listName: Paz Castaing, Mario
-- id: lourdes-peroni
-  name: Lourdes Peroni
-  listName: Peroni, Lourdes
-- id: alberto-poletti
-  name: Alberto Poletti
-  listName: Poletti, Alberto
-- id: mario-ramos-reyes
-  name: Mario Ramos Reyes
-  listName: Ramos Reyes, Mario
-- id: maria-ines-ramirez
-  name: María Inés Ramírez
-  listName: Ramírez, María Inés
-- id: manuel-riera-dominguez
-  name: Manuel Riera Domínguez
-  listName: Riera Domínguez, Manuel
-- id: omar-rodriguez-servin
-  name: Omar Rodriguez Servín
-  listName: Rodriguez Servín, Omar
-- id: gustavo-rojas
-  name: Gustavo Rojas
-  listName: Rojas, Gustavo
-- id: veronica-ruiz
-  name: Verónica Ruíz
-  listName: Ruíz, Verónica
-- id: roberto-ruiz-diaz-labrano
-  name: Roberto Ruíz Díaz Labrano
-  listName: Ruíz Díaz Labrano, Roberto
-- id: alberto-sandoval
-  name: Alberto Sandoval
-  listName: Sandoval, Alberto
-- id: josefina-sapena
-  name: Josefina Sapena
-  listName: Sapena, Josefina
-- id: jorge-silvero
-  name: Jorge Silvero
-  listName: Silvero, Jorge
-- id: jose-luis-torales
-  name: José Luis Torales
-  listName: Torales, José Luis
-- id: pablo-villalba-bernie
-  name: Pablo Villalba Bernié
-  listName: Villalba Bernié, Pablo
-- id: laura-whittingslow
-  name: Laura Whittingslow
-  listName: Whittingslow, Laura
-- id: diego-zavala
-  name: Diego Zavala
-  listName: Zavala, Diego
-- id: gustavo-becker
-  name: Gustavo Becker
-  listName: Becker, Gustavo
-  memoriam: true
-- id: federico-callizo-nicora
-  name: Federico Callizo Nicora
-  listName: Callizo Nicora, Federico
-  memoriam: true
-- id: jorge-seall-sasiain
-  name: Jorge Seall-Sasiain
-  listName: Seall-Sasiain, Jorge
-  memoriam: true
-- id: raul-sapena-brugada
-  name: Raúl Sapena Brugada
-  listName: Sapena Brugada, Raúl
-  memoriam: true
+- id: mario-modica-lucente
+  name: Dr. Mario Módica Lucente
+  listName: Módica Lucente, Mario
+- id: miguel-angel-berni
+  name: Abg. Miguel Angel Berni
+  listName: Berni, Miguel Angel
+- id: guillermo-fronciani-casanello
+  name: Abg. Guillermo Fronciani Casanello
+  listName: Fronciani Casanello, Guillermo
+- id: bibiana-gill-ramirez
+  name: Abg. Bibiana Gill Ramirez
+  listName: Gill Ramirez, Bibiana
+- id: maria-stael-cabral-de-olmedo
+  name: Abg. María Stael Cabral de Olmedo
+  listName: Cabral de Olmedo, María Stael
+- id: zunilda-benavente
+  name: Abg. Zunilda Benavente
+  listName: Benavente, Zunilda
+- id: jose-luis-vega-meza
+  name: Abg. José Luis Vega Meza
+  listName: Vega Meza, José Luis
+- id: juan-francisco-perez-saldivar
+  name: Abg. Juan Francisco Perez Saldivar
+  listName: Perez Saldivar, Juan Francisco
