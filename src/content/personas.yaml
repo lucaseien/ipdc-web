@@ -2,7 +2,7 @@
 # - id: identificador único (se usa en comisiones.yaml).
 # - name: nombre como se muestra en las tarjetas.
 # - listName: "Apellido, Nombre", define el orden alfabético.
-# - photo: (opcional) nombre del archivo en src/assets/personas/, p. ej. mario-modica-lucente.jpg
+# - photo: (opcional) nombre del archivo en public/personas/, p. ej. mario-modica-lucente.jpg
 # - member: false si la persona no integra la lista de miembros.
 # - memoriam: true para miembros fallecidos.
 

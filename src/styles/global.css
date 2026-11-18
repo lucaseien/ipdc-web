@@ -145,4 +145,8 @@
   .prose-site blockquote p:last-of-type::after { content: none; }
   .prose-site :where(a):hover { @apply decoration-2; }
   .prose-site :where(img) { @apply rounded-card; }
+
+  /* Enlaces del menú de escritorio (src/components/Header.tsx) */
+  .nav-link { @apply relative rounded px-3 py-2 font-sans text-[0.9844rem] font-semibold text-tinta no-underline hover:text-azul-700; }
+  .nav-link--active::after { content: ''; @apply absolute right-3 -bottom-0.5 left-3 h-0.5 bg-celeste-600; }
 }
