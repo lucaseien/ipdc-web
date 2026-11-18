@@ -1,6 +1,7 @@
-dist/
-.astro/
 node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
 .netlify/
 .env
 .env.*

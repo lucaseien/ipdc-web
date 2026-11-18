@@ -1,121 +1,140 @@
-# ipdc-web
+# idsp-web
 
-Sitio web del **Instituto Paraguayo de Derecho Constitucional (IPDC)**: [ipdc.org.py](https://ipdc.org.py).
+Sitio web del **Instituto de Derecho de Seguros del Paraguay (IDSP)**: [idsp.com.py](https://idsp.com.py).
 
-Reemplaza al sitio anterior (WordPress + Elementor, 2021). Es un sitio estático hecho con [Astro](https://astro.build) y [Tailwind CSS](https://tailwindcss.com). Todo el contenido vive en archivos Markdown/MDX y YAML dentro del repositorio, y el sitio se publica en [Netlify](https://www.netlify.com).
+Hecho con [Next.js](https://nextjs.org) (App Router), React y [Tailwind CSS](https://tailwindcss.com). Todo el contenido vive en archivos Markdown/MDX y YAML dentro del repositorio; no hay base de datos. Se publica en [Netlify](https://www.netlify.com).
 
 ---
 
 ## Índice
 
-- [Requisitos](#requisitos)
+- [Mapa: dónde está cada cosa](#mapa-dónde-está-cada-cosa)
 - [Puesta en marcha](#puesta-en-marcha)
-- [Comandos](#comandos)
-- [Estructura del repositorio](#estructura-del-repositorio)
 - [Agregar y editar contenido](#agregar-y-editar-contenido)
-  - [Publicar una entrada de blog](#publicar-una-entrada-de-blog)
-  - [Agregar un evento](#agregar-un-evento)
-  - [Agregar una edición del Anuario](#agregar-una-edición-del-anuario)
-  - [Agregar o actualizar un documento](#agregar-o-actualizar-un-documento)
-  - [Autoridades, miembros y fotos](#autoridades-miembros-y-fotos)
-  - [Textos institucionales](#textos-institucionales)
-  - [Menú](#menú)
-- [Archivos, imágenes y PDFs](#archivos-imágenes-y-pdfs)
+- [Imágenes](#imágenes)
 - [Configuración del sitio](#configuración-del-sitio)
 - [Sistema de diseño](#sistema-de-diseño)
 - [Idiomas](#idiomas)
 - [Deploy en Netlify](#deploy-en-netlify)
-- [Redirecciones desde el sitio anterior](#redirecciones-desde-el-sitio-anterior)
-- [Calidad: accesibilidad, SEO y rendimiento](#calidad-accesibilidad-seo-y-rendimiento)
-- [Documentación del proyecto](#documentación-del-proyecto)
-- [Pendientes del cliente](#pendientes-del-cliente)
+- [Redirecciones](#redirecciones)
 
 ---
 
-## Requisitos
+## Mapa: dónde está cada cosa
 
-- **Node.js 22.12 o superior.** Astro 7 lo exige. El repo incluye `.nvmrc`: con [nvm](https://github.com/nvm-sh/nvm), `nvm use` selecciona la versión correcta.
-- **npm 9.6.5 o superior** (viene con Node).
-- Git.
+**Regla general:** cada página tiene dos partes, y casi siempre están en dos archivos distintos.
 
-No hace falta base de datos, PHP ni ningún servicio externo.
+- **Cómo se ve** (secciones, botones, imágenes, orden): en `src/app/`. **La carpeta es la URL** y el archivo siempre se llama `page.tsx`: `src/app/es/instituto/miembros/page.tsx` → `/es/instituto/miembros/`.
+- **Qué dice** (títulos y párrafos): en `src/content/paginas/es/*.mdx`. Cuando en una página veas `page.data.title`, `page.data.lead` o `<Markdown entry={page} />`, el texto viene de ese `.mdx`.
+
+```
+src/
+├─ app/                 PÁGINAS (la carpeta es la URL)
+│  ├─ layout.tsx        Estructura común: <head>, encabezado y footer
+│  ├─ not-found.tsx     Página 404
+│  ├─ sitemap.ts        /sitemap.xml
+│  ├─ robots.ts         /robots.txt
+│  └─ es/               Todas las páginas en español
+├─ components/          Piezas reutilizables (botones, tarjetas, header, footer…)
+├─ content/             TEXTOS Y DATOS EDITABLES
+├─ config/site.ts       Email, redes, Mailchimp, enlaces de interés
+├─ i18n/                Menú (nav.ts) y textos chicos de interfaz (ui.ts)
+├─ lib/                 Lectura de contenido, fechas, SEO, redirecciones
+├─ assets/              Logo y fotos de cabecera
+└─ styles/global.css    Colores, tipografía y estilos base
+```
+
+Lo que se repite en todas las páginas:
+
+| Qué | Archivo |
+|---|---|
+| Encabezado y menú (escritorio y celular) | `src/components/Header.tsx` |
+| Ítems del menú y del footer | `src/i18n/nav.ts` |
+| Footer | `src/components/Footer.tsx` |
+| Formulario de newsletter (en el footer) | `src/components/Newsletter.tsx` |
+| Logo | `src/components/Logo.tsx` (imagen: `src/assets/brand/logo-idsp.png`) |
+| Estructura general, favicon | `src/app/layout.tsx` |
+| Título, descripción y datos para redes de cada página | `src/lib/seo.ts` (cada página llama a `pageMeta`) |
+| Cabecera de las páginas internas (título, migas de pan, foto de fondo) | `src/components/PageHeader.tsx` |
+| Email, redes, enlace "Quiero ser miembro", enlaces de interés | `src/config/site.ts` |
+| Textos chicos de interfaz ("Menú", "Anterior", etc.) | `src/i18n/ui.ts` |
+| Colores, tipografía, clases propias | `src/styles/global.css` |
+
+### Inicio — `src/app/es/page.tsx`
+
+Cada sección empieza con un comentario `{/* ─── … ─── */}`. Buscalo con Ctrl+F.
+
+| Sección (comentario) | Qué tiene | Textos |
+|---|---|---|
+| `Portada (hero)` | Foto del Cabildo, título, bajada y botón "Conocer más" | Título y bajada: `title` y `lead` de `paginas/es/inicio.mdx`. Foto: `src/assets/fotos/cabildo.jpg` |
+| `Presentación` | "¿Quiénes somos?" y botón "Conocer más" | Cuerpo de `inicio.mdx` |
+| `Accesos` | Las 3 tarjetas: Capacitación, Charlas, Dictámenes | Lista `highlights`, arriba en el mismo archivo |
+| `Ser miembro` | Requisitos y botón "Quiero ser miembro" | `requisitos-miembro.mdx` |
+| `Blog (solo si hay entradas)` | Últimas 3 entradas | Entradas de `src/content/blog/es/` |
+| `Eventos (solo si hay)` | Próximos eventos, o el último realizado | Eventos de `src/content/eventos/es/` |
+| `Enlaces de interés` | Banco Central, Corte Suprema, AIDA | `usefulLinks` en `src/config/site.ts` |
+
+### Resto de las páginas
+
+| URL | Diseño | Textos |
+|---|---|---|
+| `/es/instituto/` (Quiénes somos) | `src/app/es/instituto/page.tsx` | `quienes-somos.mdx` |
+| `/es/instituto/que-hacemos/` | `src/app/es/instituto/que-hacemos/page.tsx` | `que-hacemos.mdx` |
+| `/es/instituto/autoridades/` (Consejo Directivo) | `src/app/es/instituto/autoridades/page.tsx` | `autoridades.mdx`. Personas y cargos: `src/content/personas.yaml` y `src/content/comisiones.yaml` |
+| `/es/instituto/miembros/` | `src/app/es/instituto/miembros/page.tsx` | `miembros.mdx` y `requisitos-miembro.mdx` |
+| `/es/eventos/` | `src/app/es/eventos/page.tsx` | `eventos.mdx` |
+| `/es/eventos/<evento>/` | `src/app/es/eventos/[slug]/page.tsx` (la misma plantilla para todos) | Un `.mdx` por evento en `src/content/eventos/es/` |
+| `/es/blog/` y categorías | Plantilla compartida: `src/components/BlogIndex.tsx` | `blog.mdx`, `blog-descargo.mdx`, `blog-colaborar.mdx` |
+| `/es/blog/<entrada>/` | `src/app/es/blog/[slug]/page.tsx` (la misma plantilla para todas) | Un `.md` por entrada en `src/content/blog/es/` |
+| `/es/contacto/` | `src/app/es/contacto/page.tsx` | `contacto.mdx`. Email y redes: `src/config/site.ts` |
+| `/es/guia-de-estilo/` (interna) | `src/app/es/guia-de-estilo/page.tsx` | En el mismo archivo |
+| Página 404 | `src/app/not-found.tsx` | En el mismo archivo |
+
+Las carpetas con `[corchetes]` son **plantillas**: un solo archivo genera todas las páginas de ese tipo. Si cambiás uno, cambian todos los eventos o todas las entradas.
+
+### Ejemplos rápidos
+
+- **Sacar o cambiar un botón del hero:** `src/app/es/page.tsx`, sección `Portada (hero)`.
+- **Cambiar el título grande del inicio:** `src/content/paginas/es/inicio.mdx`, campo `title:`.
+- **Cambiar la foto del hero:** reemplazá `src/assets/fotos/cabildo.jpg`, o cambiá el `import cabildo from …` al principio de `src/app/es/page.tsx`.
+- **Agregar o quitar un ítem del menú:** `src/i18n/nav.ts`.
+- **Cambiar un color en todo el sitio:** `src/styles/global.css`, bloque `@theme`.
+
+---
 
 ## Puesta en marcha
 
+Requisitos: **Node.js 22.12 o superior** (el repo incluye `.nvmrc`: con nvm, `nvm use`) y npm.
+
 ```bash
-git clone https://github.com/renzoeientech/ipdc-web.git
-cd ipdc-web
-nvm use          # opcional, si usás nvm
 npm install
 npm run dev
 ```
 
-Abrí la URL que muestra la terminal, normalmente <http://localhost:4321/es/>. La raíz `/` redirige a `/es/`.
-
-> **Si ves errores 404 o 500 en desarrollo después de agregar archivos de contenido o cambiar `src/content.config.ts`:** cortá el servidor (Ctrl+C) y volvé a correr `npm run dev`. El servidor de desarrollo no siempre detecta colecciones nuevas.
->
-> Astro 7 permite **un solo** servidor por proyecto. Si al iniciar dice *"already running at http://localhost:XXXX"*, ya hay uno abierto: usá esa URL o cerralo con `npx astro dev stop` / `npx astro preview stop`.
-
-## Comandos
+Abrí <http://localhost:3000/es/>. La raíz `/` redirige a `/es/`.
 
 | Comando | Qué hace |
 |---|---|
-| `npm install` | Instala las dependencias. |
-| `npm run dev` | Servidor de desarrollo con recarga en vivo. |
-| `npm run build` | Genera el sitio estático en `dist/`: optimiza imágenes, calcula peso y páginas de los PDFs y genera sitemap, RSS y redirecciones. |
-| `npm run preview` | Sirve `dist/` en local para revisar el build final. Hay que correr `npm run build` antes. |
-| `npm run check` | Verifica tipos y errores en archivos `.astro` y en el contenido. **Correlo antes de cada commit.** |
-| `npm run check:redirects` | Verifica que todas las URLs del sitio anterior tengan destino. Hay que correr `npm run build` antes. |
-
-## Estructura del repositorio
-
-```
-ipdc-web/
-├─ astro.config.mjs          Dominio, idiomas, sitemap, Tailwind, integración de redirecciones
-├─ netlify.toml              Build, versión de Node y headers (caché y seguridad)
-├─ src/
-│  ├─ content/               ← TODO EL CONTENIDO EDITABLE
-│  │  ├─ blog/es/            Entradas del blog (.md)
-│  │  ├─ eventos/es/         Eventos (.mdx)
-│  │  ├─ paginas/es/         Textos institucionales (.mdx)
-│  │  ├─ personas.yaml       Autoridades y miembros
-│  │  ├─ comisiones.yaml     Comisiones Directivas
-│  │  ├─ anuarios.yaml       Ediciones del Anuario
-│  │  └─ documentos.yaml     Constituciones y documentos descargables
-│  ├─ content.config.ts      Campos permitidos y obligatorios de cada tipo de contenido
-│  ├─ assets/                Imágenes que Astro optimiza (fotos, retratos, logos)
-│  ├─ components/            Componentes de interfaz
-│  ├─ config/site.ts         Email, redes, Mailchimp
-│  ├─ i18n/                  Textos de interfaz (ui.ts) y menú (nav.ts)
-│  ├─ integrations/          Generador de public/_redirects para Netlify
-│  ├─ layouts/               Estructura común (<head>, SEO, header, footer)
-│  ├─ lib/                   Utilidades (lectura de contenido, fechas, PDFs)
-│  ├─ pages/                 Rutas: cada archivo es una URL
-│  └─ styles/global.css      Colores, tipografía y estilos base
-├─ public/                   Se publica tal cual: PDFs, favicons, imagen para redes
-│  └─ wp-content/uploads/    PDFs e imágenes del sitio anterior, con las mismas URLs
-├─ scripts/                  Verificación de redirecciones y script de migración (histórico)
-├─ migration/                Texto original del sitio anterior (archivo, no se publica)
-├─ CONTENT_INVENTORY.md      Inventario del sitio anterior
-└─ ARCHITECTURE.md           Arquitectura, sitemap y decisiones
-```
+| `npm run dev` | Servidor de desarrollo con recarga en vivo. Los cambios en `src/content/` se ven al recargar la página. |
+| `npm run build` | Genera el sitio de producción. Falla si algún archivo de contenido tiene un error. **Correlo antes de cada commit.** |
+| `npm run start` | Sirve el build de producción en local (correr `npm run build` antes). |
+| `npm run check` | Verifica tipos de TypeScript. |
 
 ---
 
 ## Agregar y editar contenido
 
-Todo se hace editando archivos de texto, desde un editor local o directamente en GitHub (abrir el archivo → ícono de lápiz → *Commit changes*). **Cada commit a `main` publica el sitio automáticamente** en uno o dos minutos.
+Todo se hace editando archivos de texto, en un editor local o en GitHub (abrir el archivo → lápiz → *Commit changes*). **Cada commit a `main` publica el sitio automáticamente.**
 
-Si un archivo tiene un error (por ejemplo, falta un campo obligatorio o una fecha está mal escrita), el build falla, Netlify **mantiene la versión anterior en línea** y el log indica el archivo y el campo. Para probar antes de publicar, trabajá en una rama y abrí un *pull request*: Netlify genera una vista previa con URL propia.
+Si un archivo tiene un error (falta un campo obligatorio, una fecha mal escrita, una imagen que no existe), el build falla indicando el archivo y el campo, y Netlify **mantiene la versión anterior en línea**. Los campos permitidos de cada tipo de contenido están definidos en `src/lib/content.ts`.
 
-Los datos del encabezado de cada archivo (entre las líneas `---`) se llaman *frontmatter* y usan el formato YAML:
+El encabezado de cada archivo (entre las líneas `---`) usa YAML:
 - Si un texto contiene `:` o empieza con comillas, encerralo entre comillas dobles: `title: "Congreso: día 1"`.
 - Las fechas van como `AAAA-MM-DD`.
 
 ### Publicar una entrada de blog
 
-1. Creá un archivo en `src/content/blog/es/`. **El nombre del archivo es la URL**: `mi-articulo.md` se publica en `/es/blog/mi-articulo/`. Usá minúsculas, sin acentos ni espacios, con guiones.
-2. Copiá esta plantilla:
+Creá un archivo en `src/content/blog/es/`. **El nombre del archivo es la URL**: `mi-articulo.md` se publica en `/es/blog/mi-articulo/`. Minúsculas, sin acentos ni espacios, con guiones.
 
 ```markdown
 ---
@@ -124,7 +143,7 @@ description: "Resumen de una o dos oraciones (hasta 160 caracteres). Aparece en 
 date: 2026-10-01
 category: opinion              # opinion  |  noticias-y-eventos
 authors: ["Nombre Apellido"]   # uno o varios; [] si no tiene firma
-authorPhoto: ../../../assets/autores/nombre-apellido.jpg   # opcional
+authorPhoto: /imagenes/autores/nombre-apellido.jpg   # opcional
 draft: false                   # true = no se publica todavía
 ---
 
@@ -134,103 +153,63 @@ Primer párrafo del artículo.
 
 Texto con **negrita**, _cursiva_ y [un enlace](https://ejemplo.com).
 
-> Una cita destacada.
-
-![Descripción de la imagen para personas que no la ven](../../../assets/blog/mi-imagen.jpg)
+![Descripción de la imagen](/imagenes/blog/mi-imagen.jpg)
 
 Texto con una nota al pie.[^1]
 
 [^1]: Texto de la nota al pie.
 ```
 
-- **Imágenes:** copialas en `src/assets/blog/` y enlazalas con la ruta relativa como en el ejemplo. La descripción entre corchetes es obligatoria para accesibilidad.
-- **Foto del autor:** va en `src/assets/autores/`. Conviene cuadrada y centrada en la cara.
+- **Categorías:** están en `src/lib/content.ts` (`categories` y el `z.enum` de `category`). Si agregás una, cambiá los dos.
 - **Descargo de responsabilidad:** se agrega solo al pie de cada entrada.
-- **Categorías:** en `src/lib/content.ts` (`categories`). Si agregás una, sumala también al `enum` de `category` en `src/content.config.ts`.
 
 ### Agregar un evento
 
-1. Creá `src/content/eventos/es/nombre-del-evento.mdx`. Se publica en `/es/eventos/nombre-del-evento/`.
-2. Plantilla, con todos los campos opcionales indicados:
+Creá `src/content/eventos/es/nombre-del-evento.mdx`. Se publica en `/es/eventos/nombre-del-evento/`.
 
 ```markdown
 ---
-title: "II Congreso Paraguayo de Derecho Constitucional"
+title: "Diplomado en Derecho de Seguros"
 description: "Resumen breve para buscadores y redes (hasta 200 caracteres)."
-startDate: 2026-11-20
-endDate: 2026-11-21                 # opcional
+startDate: 2027-03-01
+endDate: 2027-03-02                 # opcional
 location: Asunción                  # opcional
 address: "Dirección exacta"         # opcional
 modality: Presencial                # opcional
 registrationUrl: https://forms.gle/…   # opcional; el botón se oculta cuando el evento terminó
-cover: ../../../assets/eventos/placa.jpg       # opcional
+cover: /imagenes/eventos/placa.jpg  # opcional
 coverAlt: "Descripción de la imagen"
 videos:                             # opcional
   - youtubeId: eUGaK0uTATo          # lo que va después de watch?v= en la URL de YouTube
     title: Resumen del evento
 partners:                           # opcional; se agrupan por "group"
-  - { group: "Organizadores", name: "Instituto Paraguayo de Derecho Constitucional", logo: ../../../assets/brand/logo-ipdc.svg, url: "https://ipdc.org.py/" }
+  - { group: "Organizadores", name: "IDSP", logo: /imagenes/eventos/logo-idsp.png, url: "https://idsp.com.py/" }
 ---
 
 Descripción del evento en Markdown.
 ```
 
-El sitio separa solo los **próximos eventos** de los **anteriores** según la fecha (`endDate`, o `startDate` si no hay fin). La home muestra los próximos; si no hay ninguno, muestra el último realizado. Para anunciar una actividad sin página propia, también se puede publicar una entrada de blog en la categoría `noticias-y-eventos`.
+El sitio separa solo los **próximos eventos** de los **anteriores** según la fecha. La portada muestra los próximos; si no hay, muestra el último realizado.
 
-### Agregar una edición del Anuario
+### Consejo Directivo y personas
 
-1. Subí el PDF del índice a `public/documentos/` (comprimilo antes, ver [PDFs](#archivos-imágenes-y-pdfs)).
-2. Agregá un bloque **al principio** de `src/content/anuarios.yaml`:
-
-```yaml
-- id: "2025"
-  year: 2025
-  title: Anuario 2025
-  indexPdf: /documentos/indice-anuario-2025.pdf
-```
-
-El peso y la cantidad de páginas se calculan solos.
-
-### Agregar o actualizar un documento
-
-En `src/content/documentos.yaml`:
-
-```yaml
-- id: reglamento-1813          # identificador único
-  group: historicas            # constitucion-1992  |  historicas
-  order: 5                     # orden dentro del grupo
-  year: 1813                   # opcional
-  title: Reglamento de Gobierno de 1813
-  lang: es                     # es | gn | en
-  file: /documentos/reglamento-1813.pdf   # archivo en public/ …
-  # url: https://…                        # … o un enlace externo (no ambos)
-```
-
-Sin `file` ni `url`, la tarjeta se muestra como *"Documento no disponible temporalmente"*. Así está hoy el Reglamento de 1813: cuando llegue el PDF, subilo a `public/documentos/` y agregá la línea `file:`.
-
-### Autoridades, miembros y fotos
-
-**Personas:** `src/content/personas.yaml`. Cada persona se carga **una sola vez** y se usa tanto en Miembros como en Autoridades.
+**Personas:** `src/content/personas.yaml`. Cada persona se carga una sola vez.
 
 ```yaml
 - id: nombre-apellido            # único; se usa en comisiones.yaml
-  name: Nombre Apellido          # como se muestra en la tarjeta
+  name: Abg. Nombre Apellido     # como se muestra en la tarjeta
   listName: Apellido, Nombre     # define el orden alfabético
-  photo: nombre-apellido.jpg     # opcional
-  member: true                   # false si no integra la lista de miembros
-  memoriam: false                # true → sección "In Memoriam"
+  photo: nombre-apellido.jpg     # opcional: archivo en public/personas/
+  memoriam: false                # true para miembros fallecidos
 ```
 
-**Fotos:**
-1. Copiá la foto a `src/assets/personas/`, por ejemplo `nombre-apellido.jpg`.
-2. Agregá `photo: nombre-apellido.jpg` a la persona.
-3. Recomendado: retrato vertical 4:5 o cuadrado, centrado en la cara, de al menos 600 px de ancho, JPG o WebP y fondo homogéneo entre todas las fotos. Sin foto, la tarjeta muestra las iniciales.
+Sin foto, la tarjeta muestra las iniciales. Foto recomendada: vertical 4:5 o cuadrada, de al menos 600 px de ancho.
 
-**Comisión Directiva:** `src/content/comisiones.yaml`. Para una nueva comisión, agregá un bloque arriba con `current: true` y sacale `current: true` a la anterior, que pasa sola a *"Comisiones anteriores"*.
+**Consejo Directivo:** `src/content/comisiones.yaml`. Para un nuevo consejo, agregá un bloque arriba con `current: true` y sacáselo al anterior, que pasa solo a *"Consejos anteriores"*.
 
 ```yaml
-- id: "2028-2031"
-  period: "2028-2031"
+- id: "2026-2028"
+  period: "2026-2028"
   current: true
   members:
     - { persona: nombre-apellido, role: Presidente }
@@ -238,158 +217,57 @@ Sin `file` ni `url`, la tarjeta se muestra como *"Documento no disponible tempor
 
 ### Textos institucionales
 
-Están en `src/content/paginas/es/`, un archivo por texto. Se editan como Markdown; los campos `title`, `description` (para buscadores) y `lead` (bajada debajo del título) están en el encabezado.
-
-| Archivo | Dónde aparece |
-|---|---|
-| `inicio.mdx` | Inicio: título, bajada y texto de presentación |
-| `quienes-somos.mdx` | El Instituto → Quiénes somos (incluye la Reseña histórica) |
-| `que-hacemos.mdx` | Qué hacemos. Cada área es un bloque `<Accordion title="…">…</Accordion>` |
-| `autoridades.mdx`, `miembros.mdx`, `requisitos-miembro.mdx` | Autoridades y Miembros |
-| `publicaciones.mdx`, `publicaciones-compra.mdx` | Publicaciones |
-| `constitucion-1992.mdx`, `constituciones-historicas.mdx` | Constitución |
-| `blog.mdx`, `blog-descargo.mdx`, `blog-colaborar.mdx` | Introducción, descargo y texto para colaborar del blog |
-| `eventos.mdx`, `contacto.mdx` | Título y descripción de esas páginas |
-
-### Menú
-
-Se edita en `src/i18n/nav.ts`. El footer toma los mismos enlaces.
+En `src/content/paginas/es/`, un archivo por texto. `title`, `description` (para buscadores) y `lead` (bajada debajo del título) van en el encabezado; el resto es Markdown. Dentro de los `.mdx` también se pueden usar `<Accordion title="…">…</Accordion>`, `<Callout>…</Callout>` y `<YouTube id="…" title="…" />`.
 
 ---
 
-## Archivos, imágenes y PDFs
+## Imágenes
 
-**PDFs y descargables:** van en `public/`. Los del sitio anterior siguen en `public/wp-content/uploads/…`, con la **misma URL que tenían**, para no romper enlaces externos ni el posicionamiento en Google. **Para archivos nuevos usá `public/documentos/`.**
-- No hace falta anotar el peso ni las páginas: se calculan solos.
-- Comprimí los PDFs pesados antes de subirlos. Con [Ghostscript](https://www.ghostscript.com):
-  ```bash
-  gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -dNOPAUSE -dBATCH -dQUIET -sOutputFile=salida.pdf entrada.pdf
-  ```
+| Qué | Dónde | Cómo se usa |
+|---|---|---|
+| Fotos de cabecera y logo | `src/assets/fotos/`, `src/assets/brand/` | Con `import` en la página (ver `src/app/es/page.tsx`) |
+| Imágenes del blog y eventos | `public/imagenes/…` | Ruta desde `public`: `/imagenes/blog/foto.jpg` |
+| Fotos de personas | `public/personas/` | Solo el nombre del archivo en `personas.yaml` |
+| Favicons e imagen para redes | `public/` | Ya configurados |
 
-**Imágenes:** van en `src/assets/`, no en `public/`, porque así Astro las convierte a WebP, genera varios tamaños y las carga de forma diferida.
-- Toda imagen con información necesita texto alternativo. Las decorativas llevan `alt=""`.
-- Formatos: JPG, PNG, WebP o SVG. **No uses HEIC** (fotos de iPhone): la mayoría de los navegadores no lo muestra.
-- Tamaño máximo recomendado: 2560 px de ancho.
-
-| Carpeta | Contenido |
-|---|---|
-| `src/assets/fotos/` | Fotos de cabecera (monumentos de Asunción) |
-| `src/assets/personas/` | Retratos de autoridades y miembros |
-| `src/assets/autores/` | Fotos de autores del blog |
-| `src/assets/blog/`, `src/assets/eventos/`, `src/assets/publicaciones/` | Imágenes de cada sección |
-| `src/assets/brand/` | Logo en SVG |
+Next convierte las imágenes a AVIF/WebP y genera los tamaños necesarios. Toda imagen con información necesita texto alternativo; las decorativas llevan `alt=""`. **No uses HEIC** (fotos de iPhone). Tamaño máximo recomendado: 2560 px de ancho.
 
 ## Configuración del sitio
 
-Los datos institucionales están en **`src/config/site.ts`**: nombre, email (`ipdc.py@gmail.com`), ubicación y redes (Facebook, X, YouTube).
+Los datos institucionales están en **`src/config/site.ts`**: nombre, email, ubicación, redes sociales y el enlace del formulario de inscripción. Los campos vacíos no se muestran.
 
-**Newsletter (Mailchimp):** el formulario está desactivado hasta completar `mailchimpAction` con la URL del formulario embebido. Se obtiene en Mailchimp → *Audience* → *Signup forms* → *Embedded forms*: es el atributo `action="https://….list-manage.com/subscribe/post?u=…&id=…"` del código. Con ese valor, el formulario se activa solo en el footer y en Contacto.
+**Newsletter (Mailchimp):** el formulario está desactivado hasta completar `mailchimpAction` con la URL del formulario embebido (Mailchimp → *Audience* → *Signup forms* → *Embedded forms* → atributo `action` del código).
 
 ## Sistema de diseño
 
-La referencia visual es la **guía de estilo** en `/es/guia-de-estilo/` (`src/pages/es/guia-de-estilo.astro`). Es interna: tiene `noindex`, no aparece en el sitemap y está excluida en `robots.txt`.
-
-**Tokens** (en `src/styles/global.css`, bloque `@theme`). Se usan como clases de Tailwind, p. ej. `text-azul-700` o `bg-papel`:
+La referencia visual es `/es/guia-de-estilo/` (interna: no se indexa). Los colores están en `src/styles/global.css`, bloque `@theme`, y se usan como clases de Tailwind (`text-azul-700`, `bg-papel`…):
 
 | Token | Valor | Uso |
 |---|---|---|
-| `azul-700` | `#193389` | Azul del logo: enlaces, botones |
-| `azul-900` / `azul-950` | `#10204F` / `#0C1636` | Títulos / footer y fondos oscuros |
-| `rojo-600` | `#C71B2E` | Rojo del logo: solo acentos (filetes, viñetas) |
-| `rojo-700` | `#A8172A` | Rótulos pequeños |
+| `azul-700` | `#004890` | Azul del logo: enlaces, botones |
+| `azul-900` / `azul-950` | `#00254D` / `#001A38` | Títulos / footer y fondos oscuros |
+| `celeste-600` | `#1A9CC8` | Celeste del logo: solo acentos (filetes, íconos) |
+| `celeste-700` | `#0A6D93` | Rótulos pequeños |
 | `papel` / `tinta` | `#FAF8F4` / `#1C1E26` | Fondo y texto principal |
-| `font-serif` | Newsreader | Títulos |
-| `font-sans` | Source Sans 3 | Texto |
+| `font-serif` / `font-sans` | Newsreader / Source Sans 3 | Títulos / texto |
 
-Todas las combinaciones de texto cumplen **WCAG 2.1 AA**. Si agregás un color, verificá su contraste antes de usarlo para texto.
-
-**Clases propias:** `container-page` (ancho de página), `label` (rótulo en versalitas), `filete` (línea bicolor), `prose-ipdc` (texto largo).
-
-**Componentes** (`src/components/`): `Header`, `Footer`, `Logo`, `PageHeader`, `SectionHeading`, `Breadcrumbs`, `Button`, `Icon`, `DocumentCard`, `PersonCard`, `PostCard`, `EventCard`, `BlogIndex`, `Pagination`, `Accordion`, `Callout`, `Newsletter`, `YouTube` (carga el reproductor solo al hacer clic) y `OrganizationSchema`.
-
-**Logo:** `src/assets/brand/logo-ipdc.svg` es un redibujo vectorial del PNG original. Si aparece el archivo oficial, reemplazalo junto con `public/favicon.svg`, `public/logo-ipdc.png` y los PNG de favicon.
+**Clases propias:** `container-page` (ancho de página), `label` (rótulo en versalitas), `filete` (línea bicolor), `prose-site` (texto largo).
 
 ## Idiomas
 
-- Rutas con prefijo: `/es/…` (por defecto) y `/en/…`, configuradas en `astro.config.mjs`.
-- **Por ahora solo existe español.** No se genera ninguna página `/en/` y el selector de idioma se oculta solo.
-- Para agregar el inglés:
-  1. Completar `ui.en` (`src/i18n/ui.ts`) y `mainNav.en` (`src/i18n/nav.ts`).
-  2. Crear el contenido en carpetas `en/` (`src/content/blog/en/`, `paginas/en/`, …).
-  3. Crear las páginas en `src/pages/en/`.
-  4. Pasar `alternates={{ es: '/es/…', en: '/en/…' }}` a `BaseLayout` en cada página traducida. Así aparece el selector y se generan las etiquetas `hreflang`.
+Por ahora solo existe español (`/es/…`). Para agregar inglés: completar `ui.en` (`src/i18n/ui.ts`) y `mainNav.en` (`src/i18n/nav.ts`), crear el contenido en carpetas `en/` dentro de `src/content/` y las páginas en `src/app/en/`.
 
 ## Deploy en Netlify
 
-La configuración está en `netlify.toml`: comando `npm run build`, carpeta `dist`, Node 22 y headers de caché y de seguridad.
+`netlify.toml` ya tiene la configuración: Netlify detecta Next.js solo y usa su adaptador oficial (páginas, imágenes optimizadas y redirecciones).
 
-**Primera vez:**
-1. En Netlify: *Add new site* → *Import an existing project* → GitHub → `renzoeientech/ipdc-web`.
-2. Netlify toma la configuración de `netlify.toml`; no hay que cambiar nada en la pantalla de build.
-3. *Deploy*. Queda publicado en una URL `*.netlify.app` para revisar.
-4. **Dominio:** *Domain management* → *Add a domain* → `ipdc.org.py`. En el proveedor DNS del dominio, apuntar los registros según las instrucciones de Netlify. Netlify emite el certificado HTTPS solo.
-5. Activar *Force HTTPS*.
-
-**Día a día:**
-- Cada push a `main` publica automáticamente.
-- Cada pull request genera una **vista previa** con URL propia.
+- Cada push a `main` publica automáticamente; cada pull request genera una vista previa con URL propia.
 - Si un deploy falla, sigue en línea la versión anterior.
-- Para volver atrás: *Deploys* → elegir un deploy anterior → *Publish deploy*.
+- Para volver atrás: *Deploys* → elegir uno anterior → *Publish deploy*.
 
-**Cambio de dominio (del WordPress a Netlify):** apuntar el DNS recién cuando el sitio esté aprobado. Conviene guardar antes una copia completa del WordPress (archivos y base de datos).
+## Redirecciones
 
-## Redirecciones desde el sitio anterior
-
-`dist/_redirects` se **genera en cada build** (`src/integrations/netlify-redirects.ts`):
-- reglas fijas para las páginas, categorías, feeds y fichas del WordPress (`/constitution/` → `/es/constitucion/`, `/autorities/` → `/es/instituto/autoridades/`, etc.);
-- una regla 301 por cada entrada del blog con `legacyUrl` en su frontmatter.
-
-`migration/old-urls.txt` lista las URLs del sitio anterior. `npm run build && npm run check:redirects` verifica que todas tengan una regla y que el destino exista: hoy resuelven **55 de 55**. Si cambiás el nombre de archivo de una entrada, la redirección se actualiza sola. Si movés una página, agregá una regla en `STATIC_RULES`.
-
-## Calidad: accesibilidad, SEO y rendimiento
-
-Objetivos: **WCAG 2.1 AA** y **Lighthouse 90+** en todas las categorías.
-
-**Qué incluye el código:**
-- **Accesibilidad:** HTML semántico; enlace para saltar al contenido; foco visible; menús operables con teclado (Enter para abrir, Escape para cerrar); contraste AA; áreas táctiles de 44 px o más; `prefers-reduced-motion`; texto alternativo en todas las imágenes; acordeones nativos (`<details>`).
-- **SEO:** `title` y `meta description` por página; URL canónica; Open Graph y Twitter Card (con imagen por defecto `public/og-default.jpg`); `sitemap-index.xml`; `robots.txt`; datos estructurados de **Organization** (inicio), **BlogPosting** (entradas) y **Event** (eventos); RSS en `/es/blog/rss.xml`.
-- **Rendimiento:** imágenes WebP responsivas con carga diferida; fuentes propias precargadas; CSS dentro del HTML; videos de YouTube que se cargan solo al hacer clic; casi nada de JavaScript.
-
-**Resultados actuales** (Lighthouse, modo celular):
-
-| Página | Rendimiento | Accesibilidad | Buenas prácticas | SEO |
-|---|---|---|---|---|
-| Inicio | 99 | 100 | 100 | 100 |
-| Constitución de 1992 | 99 | 100 | 100 | 100 |
-| Entrada de blog | 99 | 100 | 100 | 100 |
-| Miembros, Blog | 98 | 100 | 100 | 100 |
-| Evento | 100 | 100 | 100 | 100 |
-
-axe (accesibilidad automática): 0 problemas en las 37 páginas, a 390 px y 1280 px de ancho.
-
-**Antes de publicar cambios grandes:**
-1. `npm run check`: sin errores.
-2. `npm run build && npm run check:redirects`.
-3. `npm run preview` y, en Chrome, DevTools → **Lighthouse** → modo *Mobile* sobre las páginas cambiadas.
-4. Accesibilidad: extensión [axe DevTools](https://www.deque.com/axe/devtools/) y una pasada con la tecla Tab.
-5. Probar en un celular real o en el modo responsive de DevTools (390 px).
-
-## Documentación del proyecto
-
-| Archivo | Contenido |
-|---|---|
-| [`CONTENT_INVENTORY.md`](CONTENT_INVENTORY.md) | Relevamiento del sitio anterior: páginas, entradas, archivos, enlaces rotos y problemas encontrados. |
-| [`ARCHITECTURE.md`](ARCHITECTURE.md) | Navegación nueva y su porqué, sitemap, modelo de contenido, idiomas, redirecciones y correcciones aplicadas. |
-| [`migration/`](migration/) | Texto original de cada página y entrada del sitio anterior (archivo de referencia; el sitio usa `src/content/`). |
-| [`scripts/migrate-posts.py`](scripts/migrate-posts.py) | Registro de cómo se convirtieron las entradas del WordPress. Ya se ejecutó; no hace falta volver a correrlo. |
-
-## Pendientes del cliente
-
-- URL del formulario embebido de **Mailchimp** (ver [Configuración del sitio](#configuración-del-sitio)).
-- PDF del **Reglamento de Gobierno de 1813**: el enlace del sitio anterior (mre.gov.py) está caído.
-- **Logo vectorial** original, si existe.
-- **Fotos** de autoridades y miembros (opcionales).
-- **Traducción al inglés** (más adelante).
-
-
-http://localhost:4321/es/guia-de-estilo/
+Están en `src/lib/redirects.ts` y se aplican con un 301:
+- `/` → `/es/`;
+- reglas fijas del sitio anterior (`STATIC_RULES`), p. ej. `/consejo-directivo/` → `/es/instituto/autoridades/`;
+- una regla por cada entrada del blog con `legacyUrl` en su encabezado.
