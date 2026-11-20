@@ -169,8 +169,8 @@ export default function GuiaDeEstilo() {
             <div className="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
               <dt className="text-label text-tinta-3">Texto · 17–18 px / 1,7</dt>
               <dd className="max-w-(--container-prose)">
-                El IDSP surge institucionalmente en el año 2005 como corolario de los conversatorios e intercambio de pareceres de un
-                grupo de amigos abogados dedicados al derecho de seguros.
+                El IDSP surge institucionalmente en el año 2005 como corolario de los conversatorios e intercambio de pareceres de un grupo de amigos abogados dedicados al derecho de seguros, y viendo la necesidad de fortalecer la especialidad como campo inexplotado
+por los profesionales abogados. El lanzamiento tuvo lugar en el Aula Magna de la Facultad de Ciencias Jurídicas y Diplomáticas de la Universidad Católica con presencia de reconocidos referentes del sector asegurador.
               </dd>
             </div>
             <div className="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
@@ -188,8 +188,8 @@ export default function GuiaDeEstilo() {
           </p>
           <div className="prose-site">
             <p>
-              El IDSP surge institucionalmente en el año 2005 como corolario de los conversatorios e intercambio de pareceres de un
-              grupo de amigos abogados dedicados al derecho de seguros, en acto solemne realizado en el Aula Magna de la Facultad de
+                El IDSP surge institucionalmente en el año 2005 como corolario de los conversatorios e intercambio de pareceres de un
+                grupo de amigos abogados dedicados al derecho de seguros, en acto solemne realizado en el Aula Magna de la Facultad de
               Ciencias Jurídicas y Diplomáticas de la Universidad Católica.
             </p>
             <h2>Requisitos</h2>
