@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "title": {
+            "type": "string"
+          },
+          "indexPdf": {
+            "type": "string",
+            "format": "starts_with",
+            "pattern": "^\\/.*"
+          }
+        },
+        "required": [
+          "year",
+          "title",
+          "indexPdf"
+        ]
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "title": {
+            "type": "string"
+          },
+          "indexPdf": {
+            "type": "string",
+            "format": "starts_with",
+            "pattern": "^\\/.*"
+          }
+        },
+        "required": [
+          "year",
+          "title",
+          "indexPdf"
+        ]
+      }
+    }
+  ]
+}

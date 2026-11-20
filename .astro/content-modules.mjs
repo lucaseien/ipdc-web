@@ -1,0 +1,19 @@
+
+export default new Map([
+["src/content/eventos/es/i-congreso-2021.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Feventos%2Fes%2Fi-congreso-2021.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/autoridades.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Fautoridades.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/blog-colaborar.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Fblog-colaborar.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/blog-descargo.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Fblog-descargo.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/blog.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Fblog.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/constitucion-1992.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Fconstitucion-1992.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/constituciones-historicas.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Fconstituciones-historicas.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/contacto.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Fcontacto.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/eventos.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Feventos.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/inicio.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Finicio.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/miembros.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Fmiembros.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/publicaciones-compra.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Fpublicaciones-compra.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/publicaciones.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Fpublicaciones.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/que-hacemos.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Fque-hacemos.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/quienes-somos.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Fquienes-somos.mdx&astroContentModuleFlag=true")],
+["src/content/paginas/es/requisitos-miembro.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpaginas%2Fes%2Frequisitos-miembro.mdx&astroContentModuleFlag=true")]]);
+		

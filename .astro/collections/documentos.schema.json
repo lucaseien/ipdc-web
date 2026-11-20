@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string",
+            "enum": [
+              "constitucion-1992",
+              "historicas"
+            ]
+          },
+          "order": {
+            "type": "number"
+          },
+          "year": {
+            "type": [
+              "number",
+              "string"
+            ]
+          },
+          "lang": {
+            "default": "es",
+            "type": "string",
+            "enum": [
+              "es",
+              "gn",
+              "en"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string",
+            "format": "starts_with",
+            "pattern": "^\\/.*"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "title",
+          "group",
+          "order"
+        ]
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string",
+            "enum": [
+              "constitucion-1992",
+              "historicas"
+            ]
+          },
+          "order": {
+            "type": "number"
+          },
+          "year": {
+            "type": [
+              "number",
+              "string"
+            ]
+          },
+          "lang": {
+            "default": "es",
+            "type": "string",
+            "enum": [
+              "es",
+              "gn",
+              "en"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string",
+            "format": "starts_with",
+            "pattern": "^\\/.*"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "title",
+          "group",
+          "order"
+        ]
+      }
+    }
+  ]
+}

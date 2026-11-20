@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "current": {
+            "default": false,
+            "type": "boolean"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "persona": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "collection": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "collection"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "slug": {
+                          "type": "string"
+                        },
+                        "collection": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "slug",
+                        "collection"
+                      ]
+                    }
+                  ]
+                },
+                "role": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "persona",
+                "role"
+              ]
+            }
+          }
+        },
+        "required": [
+          "period",
+          "members"
+        ]
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "current": {
+            "default": false,
+            "type": "boolean"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "persona": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "collection": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "collection"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "slug": {
+                          "type": "string"
+                        },
+                        "collection": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "slug",
+                        "collection"
+                      ]
+                    }
+                  ]
+                },
+                "role": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "persona",
+                "role"
+              ]
+            }
+          }
+        },
+        "required": [
+          "period",
+          "members"
+        ]
+      }
+    }
+  ]
+}
