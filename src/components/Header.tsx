@@ -45,14 +45,11 @@ export default function Header() {
   }, [openSubmenu]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-linea bg-papel/95 backdrop-blur supports-[backdrop-filter]:bg-papel/85">
-      <div className="flex h-1" aria-hidden="true">
-        <span className="flex-1 bg-celeste-600" />
-        <span className="flex-1 bg-azul-700" />
-      </div>
-      <div className="container-page flex h-[4.5rem] items-center justify-between gap-6">
+    <header className="on-dark sticky top-0 z-40 border-b border-white/10 bg-azul-950/95 backdrop-blur-md">
+      <div className="h-0.5 bg-gradient-to-r from-celeste-600 to-azul-700" aria-hidden="true" />
+      <div className="container-page flex h-[4.5rem] items-center justify-between gap-6 sm:h-20">
         <a href={`/${lang}/`} className="no-underline">
-          <Logo />
+          <Logo tone="dark" />
           <span className="sr-only">, {t(lang, 'nav.home')}</span>
         </a>
 
@@ -82,7 +79,7 @@ export default function Header() {
                     <ul
                       id={`submenu-${i}`}
                       className={cx(
-                        'absolute top-full left-0 mt-2 min-w-60 rounded-card border border-linea bg-white p-2 shadow-card-hover',
+                        'on-light absolute top-full left-0 mt-4 min-w-64 rounded-card border-t-2 border-celeste-600 bg-white p-2 shadow-card-hover',
                         openSubmenu !== i && 'hidden',
                       )}
                     >
@@ -90,7 +87,7 @@ export default function Header() {
                         <li key={child.href}>
                           <a
                             href={child.href}
-                            className="block rounded px-3 py-2 text-small text-tinta no-underline hover:bg-azul-50 hover:text-azul-800 aria-[current=page]:font-semibold aria-[current=page]:text-azul-700"
+                            className="block rounded-sm px-3.5 py-2.5 text-small font-medium text-tinta no-underline hover:bg-azul-50 hover:text-azul-800 aria-[current=page]:font-semibold aria-[current=page]:text-azul-700"
                             aria-current={isCurrent(child.href) ? 'page' : undefined}
                           >
                             {child.label}
@@ -115,7 +112,7 @@ export default function Header() {
 
         <button
           type="button"
-          className="inline-flex min-h-11 items-center gap-2 rounded-card border border-linea bg-white px-3 font-semibold text-azul-900 lg:hidden"
+          className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-white/25 px-4 text-label font-semibold tracking-[0.14em] text-white uppercase lg:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-menu"
           onClick={() => setMobileOpen((o) => !o)}
@@ -126,19 +123,24 @@ export default function Header() {
       </div>
 
       {/* Celular */}
-      <nav id="mobile-menu" aria-label={t(lang, 'a11y.mainNav')} className="border-t border-linea bg-papel lg:hidden" hidden={!mobileOpen}>
-        <ul className="container-page max-h-[calc(100dvh-5.75rem)] overflow-y-auto py-4">
+      <nav
+        id="mobile-menu"
+        aria-label={t(lang, 'a11y.mainNav')}
+        className="container-page border-t border-white/10 bg-azul-950 lg:hidden"
+        hidden={!mobileOpen}
+      >
+        <ul className="max-h-[calc(100dvh-7rem)] overflow-y-auto py-2">
           {items.map((item) => (
-            <li key={item.href} className="border-b border-linea last:border-0">
+            <li key={item.href} className="border-b border-white/10 last:border-0">
               {item.children ? (
                 <>
-                  <p className="label pt-4 pb-1 text-tinta-3">{item.label}</p>
+                  <p className="label pt-4 pb-1 text-azul-200">{item.label}</p>
                   <ul className="pb-3">
                     {item.children.map((child) => (
                       <li key={child.href}>
                         <a
                           href={child.href}
-                          className="flex min-h-12 items-center font-serif text-[1.25rem] text-azul-900 no-underline aria-[current=page]:text-celeste-700"
+                          className="flex min-h-12 items-center font-display text-[1.25rem] font-medium tracking-[-0.01em] text-white no-underline aria-[current=page]:text-celeste-300"
                           aria-current={isCurrent(child.href) ? 'page' : undefined}
                         >
                           {child.label}
@@ -150,7 +152,7 @@ export default function Header() {
               ) : (
                 <a
                   href={item.href}
-                  className="flex min-h-14 items-center font-serif text-[1.25rem] text-azul-900 no-underline aria-[current=page]:text-celeste-700"
+                  className="flex min-h-14 items-center font-display text-[1.25rem] font-medium tracking-[-0.01em] text-white no-underline aria-[current=page]:text-celeste-300"
                   aria-current={isCurrent(item.href) ? 'page' : undefined}
                 >
                   {item.label}

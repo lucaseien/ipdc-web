@@ -15,11 +15,8 @@ export default function Footer() {
 
   return (
     <footer className="on-dark bg-azul-950 text-azul-100">
-      <div className="flex h-1" aria-hidden="true">
-        <span className="flex-1 bg-celeste-600" />
-        <span className="flex-1 bg-azul-700" />
-      </div>
-      <div className="container-page grid gap-12 py-14 lg:grid-cols-12 lg:gap-8">
+      <div className="h-0.5 bg-gradient-to-r from-celeste-600 to-azul-700" aria-hidden="true" />
+      <div className="container-page grid gap-12 pt-20 pb-14 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-4">
           <Logo tone="dark" />
           <p className="mt-5 max-w-sm text-small text-azul-200">{t(lang, 'site.tagline')}.</p>
@@ -32,7 +29,7 @@ export default function Footer() {
           <ul className="space-y-2.5 text-small">
             {institute.map((l) => (
               <li key={l.href}>
-                <a href={l.href} className="text-white no-underline hover:underline">
+                <a href={l.href} className="text-white no-underline transition-colors hover:text-celeste-300">
                   {l.label}
                 </a>
               </li>
@@ -47,7 +44,7 @@ export default function Footer() {
           <ul className="space-y-2.5 text-small">
             {resources.map((l) => (
               <li key={l.href}>
-                <a href={l.href} className="text-white no-underline hover:underline">
+                <a href={l.href} className="text-white no-underline transition-colors hover:text-celeste-300">
                   {l.label}
                 </a>
               </li>
@@ -81,7 +78,7 @@ export default function Footer() {
                   <li key={s.href}>
                     <a
                       href={s.href}
-                      className="flex size-11 items-center justify-center rounded-full border border-azul-600 text-white hover:border-white hover:bg-azul-800"
+                      className="flex size-11 items-center justify-center rounded-sm border border-white/15 bg-white/5 text-white transition-colors hover:bg-white hover:text-azul-950"
                       rel="me noopener"
                     >
                       <Icon name={s.icon} className="size-5" label={s.name} />
@@ -93,16 +90,21 @@ export default function Footer() {
           )}
         </div>
 
-        <div className="border-t border-azul-800 pt-10 lg:col-span-12">
+        <div className="border-t border-white/10 pt-12 lg:col-span-12">
           <div className="max-w-2xl">
             <Newsletter tone="dark" id="footer-newsletter" />
           </div>
         </div>
       </div>
-      <div className="border-t border-azul-800">
-        <p className="container-page py-6 text-label text-azul-200">
-          © <CurrentYear /> {t(lang, 'footer.rights')}
-        </p>
+      <div className="border-t border-white/10 bg-black/20">
+        <div className="container-page flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-6 text-label tracking-[0.08em] text-azul-200 uppercase">
+          <p>
+            © <CurrentYear /> {t(lang, 'footer.rights')}
+          </p>
+          <p>
+            {site.location.city}, {site.location.country}
+          </p>
+        </div>
       </div>
     </footer>
   );

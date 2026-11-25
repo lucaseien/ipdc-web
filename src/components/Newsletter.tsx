@@ -17,7 +17,7 @@ export default function Newsletter({ tone = 'light', id = 'newsletter' }: { tone
 
   return (
     <div className={cx(dark && 'on-dark')}>
-      <h2 id={`${id}-title`} className={cx('font-serif text-h3 font-semibold text-balance', dark ? 'text-white' : 'text-azul-900')}>
+      <h2 id={`${id}-title`} className={cx('font-display text-h3 font-semibold text-balance', dark ? 'text-white' : 'text-azul-900')}>
         {t('es', 'newsletter.title')}
       </h2>
       <form
@@ -40,8 +40,8 @@ export default function Newsletter({ tone = 'light', id = 'newsletter' }: { tone
             inputMode="email"
             disabled={!enabled}
             className={cx(
-              'min-h-12 w-full rounded-card border px-3.5 text-body disabled:cursor-not-allowed disabled:opacity-60',
-              dark ? 'border-azul-600 bg-azul-900 text-white placeholder:text-azul-200' : 'border-tinta-3 bg-white text-tinta',
+              'min-h-12 w-full rounded-sm border px-5 text-body disabled:cursor-not-allowed disabled:opacity-60',
+              dark ? 'border-white/15 bg-white/5 text-white placeholder:text-azul-200' : 'border-tinta-3 bg-white text-tinta',
             )}
           />
         </div>
@@ -54,8 +54,8 @@ export default function Newsletter({ tone = 'light', id = 'newsletter' }: { tone
           type="submit"
           disabled={!enabled}
           className={cx(
-            'min-h-12 rounded-card px-5 font-semibold disabled:cursor-not-allowed disabled:opacity-60',
-            dark ? 'bg-white text-azul-900 hover:bg-azul-100' : 'bg-azul-700 text-white hover:bg-azul-800',
+            'min-h-12 rounded-sm px-7 text-[0.8125rem] uppercase tracking-[0.14em] font-semibold disabled:cursor-not-allowed disabled:opacity-60',
+            dark ? 'bg-white text-azul-950 hover:bg-celeste-100' : 'bg-azul-950 text-white hover:bg-azul-700',
           )}
         >
           {t('es', 'newsletter.submit')}

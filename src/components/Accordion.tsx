@@ -13,8 +13,8 @@ export default function Accordion({
   return (
     <details className="group border-b border-linea" open={open}>
       <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
-        <H className="font-serif text-[1.25rem] leading-snug font-semibold text-azul-900 group-hover:text-azul-700">{title}</H>
-        <span className="relative size-6 shrink-0 rounded-full border border-azul-700 text-azul-700" aria-hidden="true">
+        <H className="font-display text-[1.25rem] leading-snug font-semibold tracking-[-0.02em] text-azul-950 group-hover:text-azul-700">{title}</H>
+        <span className="relative size-8 shrink-0 rounded-full bg-azul-50 text-azul-700 transition-colors group-open:bg-azul-950 group-open:text-white" aria-hidden="true">
           <span className="absolute top-1/2 left-1/2 h-px w-2.5 -translate-1/2 bg-current" />
           <span className="absolute top-1/2 left-1/2 h-2.5 w-px -translate-1/2 bg-current transition-transform group-open:scale-y-0" />
         </span>

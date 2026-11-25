@@ -26,7 +26,7 @@ export default function Contacto() {
               <h2 id="escribinos" className="label mb-3 text-tinta-3">
                 Email
               </h2>
-              <a href={`mailto:${site.email}`} className="inline-flex items-center gap-3 font-serif text-h3 break-all">
+              <a href={`mailto:${site.email}`} className="inline-flex items-center gap-3 font-display text-h3 break-all">
                 <Icon name="mail" className="size-6 text-celeste-600" />
                 {site.email}
               </a>
@@ -36,7 +36,7 @@ export default function Contacto() {
             <h2 id="ubicacion" className="label mb-3 text-tinta-3">
               Ubicación
             </h2>
-            <p className="inline-flex items-center gap-3 font-serif text-h3 text-azul-900">
+            <p className="inline-flex items-center gap-3 font-display text-h3 text-azul-900">
               <Icon name="pin" className="size-6 text-celeste-600" />
               {site.location.city}, {site.location.country}
             </p>

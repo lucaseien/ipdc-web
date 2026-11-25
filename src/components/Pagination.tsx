@@ -21,7 +21,7 @@ export default function Pagination({ current, total, base }: { current: number; 
           <li key={n}>
             <a
               href={url(n)}
-              className="flex size-11 items-center justify-center rounded-card font-semibold no-underline hover:bg-azul-50 aria-[current=page]:bg-azul-700 aria-[current=page]:text-white"
+              className="flex size-11 items-center justify-center rounded-sm font-semibold no-underline hover:bg-azul-50 aria-[current=page]:bg-azul-950 aria-[current=page]:text-white"
               aria-current={n === current ? 'page' : undefined}
             >
               <span className="sr-only">{t('es', 'post.page')} </span>

@@ -55,7 +55,8 @@ export default async function Entrada({ params }: Props) {
       />
 
       <article>
-        <header className="border-b border-linea bg-papel-2">
+        <header className="relative isolate overflow-hidden border-b border-linea">
+          <div className="reticula absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" aria-hidden="true" />
           <div className="container-page pt-8 pb-10 sm:pt-12 sm:pb-14">
             <Breadcrumbs items={[{ label: 'Inicio', href: '/es/' }, { label: 'Blog', href: '/es/blog/' }, { label: d.title }]} />
             <div className="mx-auto mt-10 max-w-(--container-prose)">
@@ -65,7 +66,6 @@ export default async function Entrada({ params }: Props) {
                 </a>
               </p>
               <h1 className="mt-3 text-h1 font-medium">{d.title}</h1>
-              <span className="filete mt-6" aria-hidden="true" />
               <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3 text-small text-tinta-2">
                 {d.authorPhoto && (
                   <Image
@@ -112,7 +112,7 @@ export default async function Entrada({ params }: Props) {
               <span className="flex items-center gap-2 text-small text-tinta-3">
                 <Icon name="arrow-left" className="size-4" /> Anterior
               </span>
-              <span className="mt-1 block font-serif text-[1.125rem] leading-snug font-semibold text-azul-900 group-hover:underline">
+              <span className="mt-1 block font-display text-[1.125rem] leading-snug font-semibold text-azul-900 group-hover:underline">
                 {older.data.title}
               </span>
             </a>
@@ -124,7 +124,7 @@ export default async function Entrada({ params }: Props) {
               <span className="flex items-center justify-end gap-2 text-small text-tinta-3">
                 Siguiente <Icon name="arrow-right" className="size-4" />
               </span>
-              <span className="mt-1 block font-serif text-[1.125rem] leading-snug font-semibold text-azul-900 group-hover:underline">
+              <span className="mt-1 block font-display text-[1.125rem] leading-snug font-semibold text-azul-900 group-hover:underline">
                 {newer.data.title}
               </span>
             </a>

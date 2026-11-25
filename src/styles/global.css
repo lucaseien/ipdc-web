@@ -1,86 +1,102 @@
+@import '@fontsource-variable/geist/wght.css';
 @import '@fontsource-variable/newsreader/opsz.css';
 @import '@fontsource-variable/newsreader/opsz-italic.css';
-@import '@fontsource-variable/source-sans-3/wght.css';
-@import '@fontsource-variable/source-sans-3/wght-italic.css';
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
 /*
  * Sistema de diseño IDSP
  * Colores tomados del logo: azul #004890 y celeste #1A9CC8.
+ * Tipografía: Newsreader (serif) en títulos, con itálica como acento (.acento); Geist en texto.
+ * Estilo editorial-jurídico: esquinas casi rectas, filetes finos, secciones a todo el ancho.
  * Todas las combinaciones de texto cumplen WCAG 2.1 AA (ver guía de estilo).
  */
 @theme {
   --color-*: initial;
   --color-white: #ffffff;
+  --color-black: #000000;
   --color-transparent: transparent;
   --color-current: currentColor;
 
   /* Azul institucional (logo) */
-  --color-azul-50: #f2f7fc;
-  --color-azul-100: #e4eef8;
-  --color-azul-200: #c5d8ee;
+  --color-azul-50: #f1f6fc;
+  --color-azul-100: #e1ecf8;
+  --color-azul-200: #c2d6ee;
+  --color-azul-300: #93b6e0;
   --color-azul-600: #1a5eab;
   --color-azul-700: #004890;
   --color-azul-800: #003a75;
   --color-azul-900: #00254d;
-  --color-azul-950: #001a38;
+  --color-azul-950: #00142b;
 
-  /* Celeste (logo): acento. El 600 es decorativo (filetes, íconos); para texto usar el 700 */
+  /* Celeste (logo): acento. El 600 es decorativo (filetes, íconos); para texto sobre claro usar el 700.
+     Sobre fondos oscuros, el 300 es apto para texto. */
   --color-celeste-100: #e2f3fa;
+  --color-celeste-300: #7fd0ec;
   --color-celeste-600: #1a9cc8;
   --color-celeste-700: #0a6d93;
 
-  /* Neutros cálidos, "papel y tinta" */
-  --color-papel: #faf8f4;
-  --color-papel-2: #f3efe7;
-  --color-linea: #e2ddd3;
-  --color-tinta: #1c1e26;
-  --color-tinta-2: #4a4c55;
-  --color-tinta-3: #62636b;
+  /* Neutros fríos */
+  --color-papel: #f5f7fa;
+  --color-papel-2: #eaeef3;
+  --color-linea: #dbe1e8;
+  --color-tinta: #0b1220;
+  --color-tinta-2: #434b5c;
+  --color-tinta-3: #596274;
 
+  --font-display: 'Newsreader Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-sans: 'Geist Variable', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   --font-serif: 'Newsreader Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-  --font-sans: 'Source Sans 3 Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
 
   /* Escala tipográfica fluida (móvil → escritorio) */
-  --text-display: clamp(2.375rem, 1.6rem + 3.4vw, 4rem);
-  --text-display--line-height: 1.05;
-  --text-h1: clamp(2.125rem, 1.6rem + 2.4vw, 3.25rem);
-  --text-h1--line-height: 1.1;
-  --text-h2: clamp(1.625rem, 1.35rem + 1.2vw, 2.25rem);
-  --text-h2--line-height: 1.2;
+  --text-display: clamp(2.75rem, 1.6rem + 4.8vw, 5.5rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.025em;
+  --text-h1: clamp(2.25rem, 1.5rem + 3.2vw, 4rem);
+  --text-h1--line-height: 1.06;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: clamp(1.875rem, 1.4rem + 2vw, 3rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.015em;
   --text-h3: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
-  --text-h3--line-height: 1.3;
-  --text-lead: clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem);
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.01em;
+  --text-lead: clamp(1.125rem, 1.05rem + 0.4vw, 1.3125rem);
   --text-lead--line-height: 1.55;
-  --text-body: clamp(1.0625rem, 1.03rem + 0.15vw, 1.125rem);
+  --text-body: clamp(1rem, 0.98rem + 0.12vw, 1.0625rem);
   --text-body--line-height: 1.7;
   --text-small: 0.9375rem;
   --text-small--line-height: 1.5;
-  --text-label: 0.8125rem;
+  --text-label: 0.75rem;
   --text-label--line-height: 1.3;
 
   --container-prose: 68ch;
-  --container-page: 76rem;
+  --container-page: 78rem;
 
-  --radius-card: 0.375rem;
-  --shadow-card: 0 1px 2px rgb(0 37 77 / 0.06), 0 4px 16px -6px rgb(0 37 77 / 0.12);
-  --shadow-card-hover: 0 2px 4px rgb(0 37 77 / 0.08), 0 12px 28px -10px rgb(0 37 77 / 0.22);
+  --radius-card: 0.25rem;
+  --radius-panel: 0;
+  --shadow-card: 0 1px 2px rgb(0 20 43 / 0.04), 0 8px 24px -12px rgb(0 20 43 / 0.12);
+  --shadow-card-hover: 0 2px 4px rgb(0 20 43 / 0.06), 0 24px 48px -20px rgb(0 37 77 / 0.3);
+
+  --animate-aparecer: aparecer 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  @keyframes aparecer {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+  }
 }
 
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: 6.5rem;
   }
   body {
     @apply bg-papel text-tinta font-sans text-body antialiased;
-    font-optical-sizing: auto;
+    font-feature-settings: 'ss01', 'cv11';
   }
   h1, h2, h3, h4 {
-    @apply font-serif text-azul-900;
-    font-optical-sizing: auto;
+    @apply font-display font-medium text-azul-950;
     text-wrap: balance;
     overflow-wrap: break-word; /* palabras muy largas (p. ej. en mayúsculas) no desbordan en celulares */
   }
@@ -92,11 +108,12 @@
   :focus-visible {
     outline: 3px solid var(--color-azul-600);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 4px;
   }
   .on-dark :focus-visible { outline-color: var(--color-white); }
+  .on-dark .on-light :focus-visible { outline-color: var(--color-azul-600); }
 
-  ::selection { background: var(--color-azul-200); color: var(--color-azul-950); }
+  ::selection { background: var(--color-celeste-100); color: var(--color-azul-950); }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -110,17 +127,75 @@
 @layer components {
   .container-page { @apply mx-auto w-full max-w-(--container-page) px-4 sm:px-6 lg:px-8; }
 
-  /* Rótulo pequeño en versalitas, usado como "eyebrow" sobre los títulos */
-  .label { @apply font-sans text-label font-semibold tracking-[0.09em] uppercase text-celeste-700; }
+  /* Rótulo pequeño en mayúsculas espaciadas */
+  .label { @apply font-sans text-label font-semibold tracking-[0.14em] uppercase text-celeste-700; }
+
+  /* Rótulo en mayúsculas precedido por un filete, sobre los títulos de sección */
+  .eyebrow {
+    @apply inline-flex items-center gap-3 font-sans text-label font-semibold tracking-[0.18em] text-celeste-700 uppercase;
+  }
+  .eyebrow::before { content: ''; @apply h-px w-8 bg-current; }
+  .on-dark .eyebrow, .eyebrow--dark { @apply text-celeste-300; }
+
+  /* Título de sección con filete debajo */
+  .titulo-filete { @apply relative pb-6; }
+  .titulo-filete::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-0.5 w-16;
+    background: linear-gradient(90deg, var(--color-celeste-600), var(--color-azul-700));
+  }
+  .titulo-filete--centro::after { @apply right-0 mx-auto; }
+
+  /* Palabra resaltada en serif itálica */
+  .acento { @apply font-serif font-normal italic tracking-[-0.02em]; }
 
   /* Filete bicolor celeste/azul, colores del logo */
-  .filete { @apply block h-1 w-14; background: linear-gradient(90deg, var(--color-celeste-600) 50%, var(--color-azul-700) 50%); }
+  .filete { @apply block h-0.5 w-16; background: linear-gradient(90deg, var(--color-celeste-600), var(--color-azul-700)); }
+
+  /* Fondo con retícula sutil */
+  .reticula {
+    background-image:
+      linear-gradient(to right, rgb(0 37 77 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(0 37 77 / 0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .on-dark .reticula, .reticula--dark {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  }
+
+  /* Tarjeta base */
+  .card { @apply rounded-card border border-linea bg-white shadow-card; }
+  .card-hover { @apply transition duration-300 hover:-translate-y-1 hover:border-azul-200 hover:shadow-card-hover; }
+
+  /* Lista numerada con círculos (p. ej. requisitos) */
+  .pasos ol { @apply grid gap-3 p-0 sm:grid-cols-2; counter-reset: paso; list-style: none; }
+  .pasos li {
+    @apply relative m-0 flex min-h-24 items-start gap-4 rounded-card border border-white/10 bg-white/5 p-5 text-azul-100;
+    counter-increment: paso;
+  }
+  .pasos li::before {
+    content: counter(paso, decimal-leading-zero);
+    @apply flex size-10 shrink-0 items-center justify-center rounded-full bg-celeste-600 font-display text-small font-semibold text-azul-950;
+  }
+
+  /* Variante sobre fondo claro: lista con número grande y filete */
+  .pasos-claro ol { @apply m-0 grid border-t border-linea p-0; counter-reset: paso; list-style: none; }
+  .pasos-claro li {
+    @apply m-0 flex items-baseline gap-6 border-b border-linea py-6 text-lead text-tinta;
+    counter-increment: paso;
+  }
+  .pasos-claro li::before {
+    content: counter(paso, decimal-leading-zero);
+    @apply w-12 shrink-0 font-display text-[2rem] leading-none text-celeste-700;
+  }
 
   /* Texto largo: ancho de lectura, jerarquía clara */
   .prose-site {
     @apply prose max-w-(--container-prose) text-body;
-    --tw-prose-body: var(--color-tinta);
-    --tw-prose-headings: var(--color-azul-900);
+    --tw-prose-body: var(--color-tinta-2);
+    --tw-prose-headings: var(--color-azul-950);
     --tw-prose-lead: var(--color-tinta-2);
     --tw-prose-links: var(--color-azul-700);
     --tw-prose-bold: var(--color-tinta);
@@ -132,21 +207,38 @@
     --tw-prose-captions: var(--color-tinta-3);
     --tw-prose-th-borders: var(--color-linea);
     --tw-prose-td-borders: var(--color-linea);
-    line-height: 1.7;
+    line-height: 1.75;
     overflow-wrap: break-word;
   }
   /* URLs largas escritas como texto no deben desbordar en celulares */
   .prose-site :where(a) { overflow-wrap: anywhere; }
-  .prose-site :where(h2, h3, h4) { @apply font-serif font-semibold; }
-  .prose-site :where(h2) { @apply text-h2 mt-[1.8em] mb-[0.6em]; }
+  .prose-site :where(h2, h3, h4) { @apply font-display font-medium; }
+  .prose-site :where(h2) { @apply text-[clamp(1.625rem,1.4rem+1vw,2.25rem)] tracking-[-0.015em] mt-[1.8em] mb-[0.6em]; }
   .prose-site :where(h3) { @apply text-h3; }
-  .prose-site :where(blockquote) { @apply font-serif text-lead not-italic font-normal; }
+  .prose-site :where(blockquote) { @apply font-serif text-lead italic font-normal; }
   .prose-site blockquote p:first-of-type::before,
   .prose-site blockquote p:last-of-type::after { content: none; }
   .prose-site :where(a):hover { @apply decoration-2; }
   .prose-site :where(img) { @apply rounded-card; }
 
   /* Enlaces del menú de escritorio (src/components/Header.tsx) */
-  .nav-link { @apply relative rounded px-3 py-2 font-sans text-[0.9844rem] font-semibold text-tinta no-underline hover:text-azul-700; }
-  .nav-link--active::after { content: ''; @apply absolute right-3 -bottom-0.5 left-3 h-0.5 bg-celeste-600; }
+  .nav-link {
+    @apply relative inline-flex min-h-11 items-center px-3 font-sans text-[0.8125rem] font-semibold tracking-[0.12em] text-white uppercase no-underline transition-colors hover:text-celeste-300;
+  }
+  .nav-link::after {
+    content: '';
+    @apply absolute right-3 bottom-1.5 left-3 h-px origin-left scale-x-0 bg-celeste-300 transition-transform duration-300;
+  }
+  .nav-link:hover::after, .nav-link--active::after { @apply scale-x-100; }
+  .nav-link--active { @apply text-white; }
+
+  /* Frases rotativas del hero (src/components/RotatingTagline.tsx) */
+  .rotador { display: grid; }
+  .rotador > * { grid-area: 1 / 1; transition: opacity 0.9s ease, transform 0.9s ease; }
+  .rotador > [data-activo='false'] { opacity: 0; transform: translateY(0.4em); pointer-events: none; }
+
+  /* Indicador "Scroll" del hero */
+  .scroll-linea { @apply relative block h-12 w-px overflow-hidden bg-white/25; }
+  .scroll-linea::after { content: ''; @apply absolute inset-x-0 top-0 h-1/2 bg-celeste-300; animation: scroll-linea 2s ease-in-out infinite; }
+  @keyframes scroll-linea { from { transform: translateY(-100%); } to { transform: translateY(200%); } }
 }
