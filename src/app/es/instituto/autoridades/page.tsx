@@ -50,7 +50,7 @@ export default function Autoridades() {
             <div className="grid gap-12 lg:grid-cols-2">
               {previous.map((c) => (
                 <div key={c.id}>
-                  <h3 className="font-serif text-h3 font-semibold">Consejo Directivo {c.period}</h3>
+                  <h3 className="font-display text-h3 font-semibold">Consejo Directivo {c.period}</h3>
                   <dl className="mt-4 divide-y divide-linea border-y border-linea">
                     {c.members.map((m) => (
                       <div key={m.persona.id} className="flex flex-wrap justify-between gap-x-6 gap-y-1 py-3">

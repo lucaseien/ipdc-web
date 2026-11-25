@@ -249,7 +249,7 @@ La referencia visual es `/es/guia-de-estilo/` (interna: no se indexa). Los color
 | `celeste-600` | `#1A9CC8` | Celeste del logo: solo acentos (filetes, íconos) |
 | `celeste-700` | `#0A6D93` | Rótulos pequeños |
 | `papel` / `tinta` | `#FAF8F4` / `#1C1E26` | Fondo y texto principal |
-| `font-serif` / `font-sans` | Newsreader / Source Sans 3 | Títulos / texto |
+| `font-display` / `font-sans` / `font-serif` | Geist / Geist / Newsreader itálica | Títulos / texto / palabras de acento (`.acento`) |
 
 **Clases propias:** `container-page` (ancho de página), `label` (rótulo en versalitas), `filete` (línea bicolor), `prose-site` (texto largo).
 

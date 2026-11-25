@@ -127,15 +127,15 @@ export default function GuiaDeEstilo() {
           <SectionHeading id="tipografia" eyebrow="03" title="Tipografía" />
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
-              <p className="label mb-2 text-tinta-3">Títulos · Newsreader</p>
-              <p className="font-serif text-display font-medium text-azul-900">Derecho de Seguros</p>
+              <p className="label mb-2 text-tinta-3">Títulos · Geist</p>
+              <p className="font-display text-display font-medium text-azul-900">Derecho de Seguros</p>
               <p className="mt-3 text-small text-tinta-2">
                 Serif editorial con ejes variables de peso y tamaño óptico: se afina sola en títulos grandes y gana robustez en
                 tamaños chicos. Soporta todos los acentos del español y del guaraní (ã, ẽ, ĩ, õ, ũ, ỹ, g̃).
               </p>
             </div>
             <div>
-              <p className="label mb-2 text-tinta-3">Texto · Source Sans 3</p>
+              <p className="label mb-2 text-tinta-3">Texto · Geist</p>
               <p className="text-lead text-tinta">
                 Sans-serif humanista diseñada para lectura en pantalla: letras abiertas y buena legibilidad en celulares.
               </p>
@@ -148,19 +148,19 @@ export default function GuiaDeEstilo() {
           <dl className="mt-12 divide-y divide-linea border-y border-linea">
             <div className="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
               <dt className="text-label text-tinta-3">Display · 38–64 px</dt>
-              <dd className="font-serif text-display font-medium text-azul-900">Derecho de Seguros</dd>
+              <dd className="font-display text-display font-medium text-azul-900">Derecho de Seguros</dd>
             </div>
             <div className="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
               <dt className="text-label text-tinta-3">H1 · 34–52 px</dt>
-              <dd className="font-serif text-h1 font-medium text-azul-900">Qué ofrecemos</dd>
+              <dd className="font-display text-h1 font-medium text-azul-900">Qué ofrecemos</dd>
             </div>
             <div className="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
               <dt className="text-label text-tinta-3">H2 · 26–36 px</dt>
-              <dd className="font-serif text-h2 font-medium text-azul-900">Consejo Directivo 2023-2025</dd>
+              <dd className="font-display text-h2 font-medium text-azul-900">Consejo Directivo 2023-2025</dd>
             </div>
             <div className="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
               <dt className="text-label text-tinta-3">H3 · 20–24 px</dt>
-              <dd className="font-serif text-h3 font-semibold text-azul-900">Requisitos para ser miembro</dd>
+              <dd className="font-display text-h3 font-semibold text-azul-900">Requisitos para ser miembro</dd>
             </div>
             <div className="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline">
               <dt className="text-label text-tinta-3">Lead · 19–22 px</dt>

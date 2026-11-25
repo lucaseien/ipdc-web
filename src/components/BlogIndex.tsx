@@ -65,7 +65,7 @@ export default function BlogIndex({ current, category }: { current: number; cate
                 <a
                   href={t.href}
                   aria-current={t.active ? 'page' : undefined}
-                  className="inline-flex min-h-11 items-center rounded-full border border-linea bg-white px-4 text-small font-semibold whitespace-nowrap text-tinta no-underline hover:border-azul-700 aria-[current=page]:border-azul-700 aria-[current=page]:bg-azul-700 aria-[current=page]:text-white"
+                  className="inline-flex min-h-11 items-center rounded-sm border border-linea bg-white px-4 text-small font-semibold whitespace-nowrap text-tinta no-underline hover:border-azul-700 aria-[current=page]:border-azul-950 aria-[current=page]:bg-azul-950 aria-[current=page]:text-white"
                 >
                   {t.label}
                 </a>
@@ -79,7 +79,7 @@ export default function BlogIndex({ current, category }: { current: number; cate
             Todavía no hay entradas publicadas. Volvé pronto.
           </p>
         ) : (
-          <ul className="grid gap-x-10 gap-y-14 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {posts.map((p) => (
               <li key={p.id}>
                 <PostCard

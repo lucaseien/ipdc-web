@@ -23,18 +23,18 @@ export default function EventCard({ title, href, startDate, endDate, location, m
       : `${formatDate(startDate)} – ${formatDate(endDate)}`;
 
   return (
-    <article className="group relative flex gap-5 rounded-card border border-linea bg-white p-5 shadow-card transition-shadow hover:shadow-card-hover">
-      <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-card bg-azul-900 py-3 text-white" aria-hidden="true">
-        <span className={cx('font-serif leading-none font-semibold whitespace-nowrap', sameMonth ? 'text-[1.375rem]' : 'text-[1.75rem]')}>
+    <article className="card card-hover group relative flex gap-5 p-4 sm:p-5">
+      <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-azul-700 to-azul-950 py-3 text-white" aria-hidden="true">
+        <span className={cx('font-display leading-none font-semibold whitespace-nowrap', sameMonth ? 'text-[1.375rem]' : 'text-[1.75rem]')}>
           {start.day}
           {sameMonth && `–${end!.day}`}
         </span>
-        <span className="label mt-1 text-azul-200">{start.month}</span>
+        <span className="label mt-1 text-celeste-300">{start.month}</span>
         <span className="text-label text-azul-200">{start.year}</span>
       </div>
-      <div className="min-w-0">
-        <H className="font-serif text-h3 font-semibold text-azul-900">
-          <a href={href} className="no-underline after:absolute after:inset-0 group-hover:underline">
+      <div className="min-w-0 self-center">
+        <H className="font-display text-h3 font-semibold text-azul-950">
+          <a href={href} className="text-azul-950 no-underline after:absolute after:inset-0 hover:text-azul-700">
             {title}
           </a>
         </H>

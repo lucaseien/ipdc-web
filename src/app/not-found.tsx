@@ -20,7 +20,6 @@ export default function NotFound() {
     <div className="container-page py-20 sm:py-28">
       <p className="label">Error 404</p>
       <h1 className="mt-3 text-h1 font-medium">Página no encontrada</h1>
-      <span className="filete mt-6" aria-hidden="true" />
       <p className="mt-6 max-w-xl text-lead text-tinta-2">La página que buscás no existe o cambió de dirección con el nuevo sitio.</p>
       <p className="mt-8">
         <Button href="/es/" arrow>

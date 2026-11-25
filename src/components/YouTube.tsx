@@ -51,7 +51,7 @@ export default function YouTube({ id, title, poster }: { id: string; title: stri
           </>
         )}
       </div>
-      <figcaption className="mt-3 font-serif text-[1.125rem] leading-snug font-semibold text-azul-900">{title}</figcaption>
+      <figcaption className="mt-3 font-display text-[1.125rem] leading-snug font-semibold text-azul-900">{title}</figcaption>
     </figure>
   );
 }

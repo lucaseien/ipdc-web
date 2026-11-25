@@ -1,10 +1,13 @@
 import Icon from './Icon';
 import { cx } from '@/lib/cx';
 
+const pill = 'px-7 min-h-12 rounded-sm text-[0.8125rem] uppercase tracking-[0.14em] transition-colors';
+
 const styles = {
-  primary: 'bg-azul-700 text-white hover:bg-azul-800 hover:text-white px-5 min-h-12 rounded-card',
-  secondary: 'border border-azul-700 text-azul-700 bg-transparent hover:bg-azul-50 hover:text-azul-800 px-5 min-h-12 rounded-card',
-  inverse: 'bg-white text-azul-900 hover:bg-azul-100 hover:text-azul-900 px-5 min-h-12 rounded-card',
+  primary: `bg-azul-950 text-white hover:bg-azul-700 hover:text-white ${pill}`,
+  secondary: `border border-azul-950 bg-transparent text-azul-950 hover:bg-azul-950 hover:text-white ${pill}`,
+  inverse: `bg-white text-azul-950 hover:bg-celeste-100 hover:text-azul-950 ${pill}`,
+  ghost: `border border-white/25 text-white hover:bg-white/10 hover:text-white ${pill}`,
   link: 'text-azul-700 hover:text-azul-900 underline underline-offset-4 decoration-celeste-600 decoration-2 min-h-11',
 };
 
@@ -22,7 +25,12 @@ export default function Button({ href, variant = 'primary', arrow = false, class
       {...rest}
     >
       {children}
-      {arrow && <Icon name="arrow-right" className="size-4 transition-transform group-hover:translate-x-0.5" />}
+      {arrow &&
+        (variant === 'link' ? (
+          <Icon name="arrow-right" className="size-4 transition-transform group-hover:translate-x-0.5" />
+        ) : (
+          <Icon name="arrow-right" className="ml-1 size-4 transition-transform group-hover:translate-x-1" />
+        ))}
     </a>
   );
 }
