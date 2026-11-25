@@ -6,6 +6,11 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Adaptador oficial de Next.js para Netlify. Se declara explícitamente para no depender de la
+# detección automática: sin él, Netlify publica la carpeta .next como archivos sueltos y todo da 404.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
 [[headers]]
   for = "/*"
   [headers.values]
